@@ -164,3 +164,47 @@ def profile_photo(src, *, width: int = 220, caption: str = "") -> None:
         """,
         unsafe_allow_html=True,
     )
+def profile_photo(src, *, width: int = 220, caption: str = "") -> None:
+    import pathlib, base64
+    if isinstance(src, pathlib.Path):
+        try:
+            raw  = src.read_bytes()
+            mime = "jpeg" if src.suffix.lower() in (".jpg", ".jpeg") else src.suffix.lstrip(".")
+            b64  = base64.b64encode(raw).decode()
+            img_src = f"data:image/{mime};base64,{b64}"
+        except Exception:
+            st.markdown("*Profile photo not available.*")
+            return
+    else:
+        img_src = src
+    caption_html = (
+        f'<p style="text-align:center;font-size:0.82rem;color:#666;margin-top:6px">{caption}</p>'
+        if caption else ""
+    )
+    st.markdown(
+        f'<div style="display:flex;flex-direction:column;align-items:center;margin-bottom:1rem">'
+        f'<img src="{img_src}" width="{width}" '
+        f'style="border-radius:50%;object-fit:cover;border:3px solid #2e7d32;'
+        f'box-shadow:0 2px 8px rgba(0,0,0,0.15);" alt="Profile photo"/>'
+        f'{caption_html}</div>',
+        unsafe_allow_html=True,
+    )
+
+
+def photo_gallery(photos: list, *, cols: int = 3) -> None:
+    if not photos:
+        return
+    grid = st.columns(cols)
+    for idx, photo in enumerate(photos):
+        with grid[idx % cols]:
+            try:
+                st.image(photo["src"], use_container_width=True)
+                if photo.get("caption"):
+                    st.caption(photo["caption"])
+            except Exception:
+                st.markdown(
+                    f"<div style='background:#f0f0f0;padding:1.5rem;text-align:center;"
+                    f"border-radius:6px;color:#999;font-size:0.8rem'>"
+                    f"📷 {photo.get('alt_text','Image not available')}</div>",
+                    unsafe_allow_html=True,
+                )
