@@ -12,8 +12,7 @@ env/
 .streamlit/secrets.toml
 
 # Large assets (add back individually if you want to commit them)
-assets/*.pdf
-assets/*.mp4
+
 
 # OS
 .DS_Store
