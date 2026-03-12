@@ -55,18 +55,20 @@ def skill_badge(text: str) -> None:
     )
 
 
-# ── Section divider with optional label ──────────────────────────────────────
+# ── Section divider ───────────────────────────────────────────────────────────
 
 def section_divider(label: str = "") -> None:
     if label:
         st.markdown(f"### {label}")
-    st.markdown("<hr style='border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.2rem'>",
-                unsafe_allow_html=True)
+    st.markdown(
+        "<hr style='border:none;border-top:1px solid #e0e0e0;margin:0.5rem 0 1.2rem'>",
+        unsafe_allow_html=True,
+    )
 
 
 # ── Impact metric row ─────────────────────────────────────────────────────────
 
-def metric_row(items: list[tuple[str, str, str]]) -> None:
+def metric_row(items: list) -> None:
     """
     Render a responsive row of st.metric widgets.
     items: list of (label, value, delta) tuples.
@@ -74,3 +76,91 @@ def metric_row(items: list[tuple[str, str, str]]) -> None:
     cols = st.columns(len(items))
     for col, (label, value, delta) in zip(cols, items):
         col.metric(label, value, delta)
+
+
+# ── Photo gallery ─────────────────────────────────────────────────────────────
+
+def photo_gallery(photos: list, *, cols: int = 3, caption_style: str = "below") -> None:
+    """
+    Render a responsive photo grid.
+
+    Parameters
+    ----------
+    photos : list of dicts with keys {src, caption, alt_text}
+             src can be a pathlib.Path (local) or a URL string.
+    cols   : number of columns in the grid (default 3).
+    caption_style : "below"  → caption appears under each image
+                    "hover"  → shown as italicised note below (Streamlit limitation)
+    """
+    if not photos:
+        return
+
+    grid = st.columns(cols)
+    for idx, photo in enumerate(photos):
+        col = grid[idx % cols]
+        with col:
+            try:
+                st.image(
+                    photo["src"],
+                    use_container_width=True,
+                )
+                if photo.get("caption"):
+                    st.caption(photo["caption"])
+            except Exception:
+                # Image file listed but can't be loaded — show placeholder text
+                st.markdown(
+                    f"<div style='background:#f0f0f0;padding:1.5rem;text-align:center;"
+                    f"border-radius:6px;color:#999;font-size:0.8rem'>"
+                    f"📷 {photo.get('alt_text','Image not available')}</div>",
+                    unsafe_allow_html=True,
+                )
+
+
+def profile_photo(src, *, width: int = 220, caption: str = "") -> None:
+    """
+    Render a circular-style profile photo with optional caption.
+    Uses CSS border-radius trick via an HTML wrapper.
+    Streamlit's st.image doesn't support CSS classes directly,
+    so we use a base64 or URL approach depending on src type.
+
+    Parameters
+    ----------
+    src   : pathlib.Path (local file) or URL string
+    width : display width in pixels
+    """
+    import pathlib, base64
+
+    if isinstance(src, pathlib.Path):
+        # Local file → encode to base64 so HTML img tag works
+        try:
+            raw = src.read_bytes()
+            suffix = src.suffix.lower().lstrip(".")
+            mime = "jpeg" if suffix in ("jpg", "jpeg") else suffix
+            b64  = base64.b64encode(raw).decode()
+            img_src = f"data:image/{mime};base64,{b64}"
+        except Exception:
+            st.markdown("*Profile photo not available.*")
+            return
+    else:
+        img_src = src  # URL string
+
+    caption_html = (
+        f'<p style="text-align:center;font-size:0.82rem;color:#666;margin-top:6px">'
+        f'{caption}</p>'
+        if caption else ""
+    )
+
+    st.markdown(
+        f"""
+        <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:1rem">
+          <img src="{img_src}"
+               width="{width}"
+               style="border-radius:50%;object-fit:cover;
+                      border:3px solid #2e7d32;
+                      box-shadow:0 2px 8px rgba(0,0,0,0.15);"
+               alt="Profile photo" />
+          {caption_html}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
