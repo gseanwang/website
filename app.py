@@ -9,6 +9,15 @@ import sys
 import pathlib
 import streamlit as st
 
+import pathlib
+root = pathlib.Path(__file__).parent
+st.sidebar.write("ROOT:", str(root))
+st.sidebar.write("assets exists:", (root / "assets").exists())
+st.sidebar.write("profile.jpeg exists:", (root / "assets" / "profile.jpeg").exists())
+photos_df = load_photos()
+st.sidebar.write("photos rows:", len(photos_df))
+st.sidebar.write(photos_df[["filename","url"]].to_dict())
+
 # Make sure local modules are importable regardless of working directory
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 
