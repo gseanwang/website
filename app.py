@@ -19,8 +19,12 @@ from modules.data_loader import (
     load_presentations,
     load_research_projects,
     cv_bytes,
+    get_photos,
 )
-from modules.ui_components import card, pub_item, skill_badge, section_divider, metric_row
+from modules.ui_components import (
+    card, pub_item, skill_badge, section_divider, metric_row,
+    photo_gallery, profile_photo,
+)
 
 # ── Load all data up-front ────────────────────────────────────────────────────
 cfg     = load_config()
@@ -62,6 +66,11 @@ with st.sidebar:
         "University_of_Florida_logo.svg/320px-University_of_Florida_logo.svg.png",
         width=130,
     )
+    # Sidebar profile photo (small round version)
+    _sidebar_photos = get_photos("summary", "about_me")
+    if _sidebar_photos:
+        profile_photo(_sidebar_photos[0]["src"], width=90)
+
     st.markdown(f"### {P['full_name']}")
     st.caption(f"{P['title']}\n{P['institution']}")
     st.markdown("---")
@@ -95,7 +104,29 @@ if page == "🏠  Professional Summary":
     col_bio, col_met = st.columns([3, 2], gap="large")
     with col_bio:
         st.markdown("### About Me")
-        st.markdown(BIO["summary"])
+
+        # ── Profile photo ─────────────────────────────────────────────────────
+        # To add your photo: drop profile.jpg into /assets/ and update photos.csv
+        # Or paste an external URL (Google Drive, Imgur) into the `url` column.
+        _profile_photos = get_photos("summary", "about_me")
+        if _profile_photos:
+            ph_col, bio_col = st.columns([1, 3])
+            with ph_col:
+                profile_photo(
+                    _profile_photos[0]["src"],
+                    width=180,
+                    caption=_profile_photos[0].get("caption", ""),
+                )
+            with bio_col:
+                st.markdown(BIO["summary"])
+        else:
+            # No photo yet — show bio full-width with a friendly placeholder
+            st.info(
+                "📷 Add your profile photo: drop **`profile.jpg`** into `/assets/` "
+                "and make sure `photos.csv` has a row with page=summary, section=about_me.",
+                icon="ℹ️",
+            )
+            st.markdown(BIO["summary"])
 
     with col_met:
         st.markdown("### Impact at a Glance")
@@ -202,6 +233,27 @@ elif page == "🔬  Research & Extension":
              "regression modelling to validate remote sensing proxies.")
 
     st.markdown("---")
+
+    # ── Field Work Photo Gallery ──────────────────────────────────────────────
+    _field_photos = get_photos("research", "field_work")
+    if _field_photos:
+        st.markdown("### Field Work")
+        st.markdown(
+            "A selection of images from multi-site field trials, UAV missions, "
+            "and disease assessment work."
+        )
+        photo_gallery(_field_photos, cols=min(len(_field_photos), 3))
+        st.markdown("---")
+    else:
+        # No photos yet — show instructions
+        st.info(
+            "📷 **Add field photos:** Drop image files into `/assets/` and add rows "
+            "to `data/photos.csv` with `page=research` and `section=field_work`. "
+            "Or paste external URLs (Google Drive / Imgur) into the `url` column.",
+            icon="ℹ️",
+        )
+        st.markdown("---")
+
     st.markdown("### Additional Research Contributions")
 
     with st.expander("Epidemiological Modelling & Disease Forecasting"):
@@ -420,6 +472,24 @@ elif page == "🎓  Leadership & Teaching":
         card("🧪 OSHA Lab Safety", "Hazardous materials, PPE protocols, emergency response")
     with c3:
         card("📊 R / SAS Statistical Computing", "Mixed models, ANOVA, nonlinear modelling — UF IFAS workshops")
+
+    st.markdown("---")
+
+    # ── Presentations & Posters Photo Gallery ────────────────────────────────
+    st.markdown("### Presentations & Posters Gallery")
+    _talk_photos = get_photos("leadership", "presentations")
+    if _talk_photos:
+        st.markdown(
+            "Conference presentations, poster sessions, and outreach events."
+        )
+        photo_gallery(_talk_photos, cols=min(len(_talk_photos), 3))
+    else:
+        st.info(
+            "📷 **Add presentation photos:** Drop images into `/assets/` and add rows "
+            "to `data/photos.csv` with `page=leadership` and `section=presentations`. "
+            "Or use external URLs for Google Drive or Imgur links.",
+            icon="ℹ️",
+        )
 
 
 # =============================================================================
