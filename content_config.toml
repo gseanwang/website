@@ -1,0 +1,108 @@
+# =============================================================================
+# content_config.toml — Single source of truth for all portfolio content
+# Edit this file to update the site without touching Python code.
+# =============================================================================
+
+# ── Personal Info ─────────────────────────────────────────────────────────────
+[personal]
+full_name        = "Chun-Hsiang (Sean) Wang"
+preferred_name   = "Sean Wang"
+title            = "Ph.D. Candidate in Plant Pathology"
+institution      = "University of Florida"
+department       = "Department of Plant Pathology"
+location         = "Gainesville, FL 32611, USA"
+email            = "c.wang@ufl.edu"
+linkedin         = "https://linkedin.com/in/seanwang-plantpath"
+google_scholar   = "https://scholar.google.com/citations?user=YOURID"
+twitter          = "https://twitter.com/SeanWang_PlantPath"
+uf_page          = "https://plantpath.ifas.ufl.edu"
+cv_filename      = "Sean_Wang_CV.pdf"         # place file in /assets/
+profile_photo    = "profile.jpg"              # place file in /assets/  (optional)
+
+# ── Bio Paragraph ─────────────────────────────────────────────────────────────
+[bio]
+summary = """
+I am a Ph.D. candidate in the Department of Plant Pathology at the University of Florida,
+where my research sits at the intersection of fungal epidemiology, integrated pest management
+(IPM), and sustainable agricultural systems. My dissertation investigates the epidemiological
+dynamics of soilborne and foliar fungal pathogens in specialty crops, with a focus on
+developing science-based management protocols that reduce synthetic fungicide inputs while
+maintaining economic viability for growers.
+"""
+
+# ── Impact Metrics (displayed on Summary page) ────────────────────────────────
+[metrics]
+acres_informed        = "~50,000"
+acres_informed_delta  = "Commercial production"
+trial_area            = "~3 acres"
+trial_area_delta      = "Multi-site trials"
+grants_total          = "~$48,000"
+grants_delta          = "International & travel funding"
+mentees               = "7"
+mentees_delta         = "Undergrad & early-career"
+publications          = "2+"
+publications_delta    = "Plant Disease & others"
+
+# ── Education ─────────────────────────────────────────────────────────────────
+[[education]]
+degree      = "Ph.D. — Plant Pathology"
+institution = "University of Florida, Gainesville, FL"
+year        = "Expected 2025–2026"
+advisor     = "Dr. [Advisor Name]"
+thesis      = "Epidemiology and IPM of fungal pathogens in specialty crops"
+
+[[education]]
+degree      = "M.S. — Plant Pathology"
+institution = "[Previous Institution]"
+year        = "[Year]"
+advisor     = ""
+thesis      = ""
+
+[[education]]
+degree      = "B.S. — [Field]"
+institution = "[Undergraduate Institution, Country]"
+year        = "[Year]"
+advisor     = ""
+thesis      = ""
+
+# ── Skills (grouped) ──────────────────────────────────────────────────────────
+[skills]
+"Statistical Computing"      = ["R (tidyverse, lme4, ggplot2)", "SAS (PROC MIXED, PROC GLM)", "Python (pandas, NumPy, scikit-learn)"]
+"Remote Sensing & GIS"       = ["UAV / Drone Operations", "Multispectral Imaging (NDVI, disease mapping)", "ArcGIS / QGIS"]
+"Plant Pathology Methods"    = ["Disease Nursery Design", "Fungicide Efficacy Trials (FRAC groups)", "Inoculation & Bioassay Protocols", "Microscopy & Molecular Diagnostics"]
+"Scientific Communication"   = ["Peer-Reviewed Manuscripts", "Extension Publications", "Conference Presentations (APS, ISTA)"]
+"Research Management"        = ["Multi-site Field Trial Coordination", "Budget & Grant Reporting", "Mentorship of Junior Researchers"]
+
+# ── Affiliations ──────────────────────────────────────────────────────────────
+[[affiliations]]
+org   = "American Phytopathological Society (APS)"
+role  = "Student Member"
+years = "2021–Present"
+
+[[affiliations]]
+org   = "UF Plant Pathology Graduate Student Organization"
+role  = "Vice President"
+years = "2023–2024"
+
+[[affiliations]]
+org   = "International Society for Plant Pathology (ISPP)"
+role  = "Member"
+years = "2022–Present"
+
+# ── Collaboration Interests ───────────────────────────────────────────────────
+[collaboration]
+interests = [
+  "Organic and sustainable disease management systems",
+  "Remote sensing applications in plant pathology",
+  "Fungicide resistance monitoring and management",
+  "Quantitative epidemiology and disease forecasting",
+  "IPM adoption in specialty crop production",
+  "Graduate education and mentorship in plant sciences",
+]
+open_to = [
+  "Post-doctoral positions",
+  "Industry research roles",
+  "Extension specialist positions",
+  "Collaborative research projects",
+]
+expected_graduation = "2025–2026"
