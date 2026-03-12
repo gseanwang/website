@@ -1,0 +1,8 @@
+type,year,authors,title,journal,volume,issue,pages,doi,contribution_note,status
+peer_reviewed,2024,"Wang C.-H., Smith J., Doe A.","Fungicide efficacy for management of Botrytis gray mold of strawberry in Florida","Plant Disease",108,3,412-420,"10.1094/PDIS-XX-XX-XXXX","Corresponding author; 3 seasons of CFCAB trial data","published"
+peer_reviewed,2023,"Smith J., Wang C.-H., Doe A.","Evaluating organic fungicide programs for anthracnose management in strawberry","Plant Disease",107,5,880-891,"10.1094/PDIS-XX-XX-XXXX","Multi-site trial design, data collection, statistical analysis","published"
+under_review,2024,"Wang C.-H., Doe A., Smith J.","UAV-based multispectral imaging for spatial mapping of foliar disease severity","Phytopathology","","","","","UAV data collection, image processing, geospatial analysis","under_review"
+in_prep,2024,"Wang C.-H., Doe A.","Fungicide sensitivity of Botrytis cinerea isolates from Florida strawberry","Plant Disease","","","","","EC50 assays, molecular characterization, resistance genotyping","in_preparation"
+extension,2024,"Wang C.-H., Smith J.","2023-24 Strawberry Fungicide Efficacy Trials — Botrytis Gray Mold","UF/IFAS EDIS","","","PP-XXX","","Lead author","published"
+extension,2023,"Wang C.-H., Smith J.","2022-23 Strawberry Fungicide Efficacy Trials — Anthracnose Fruit Rot","UF/IFAS EDIS","","","PP-XXX","","Lead author","published"
+extension,2022,"Wang C.-H., Doe A., Smith J.","Organic Disease Management Options for Florida Strawberry Growers","UF/IFAS EDIS","","","HS-XXX","","Contributing author","published"

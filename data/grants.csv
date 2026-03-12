@@ -1,0 +1,9 @@
+type,year,title,agency,amount_usd,role,description
+international_grant,2024,"International Research Travel Grant","[Granting Agency Name]",15000,"Principal Applicant","International field collaboration and data collection in [Country]"
+international_grant,2023,"International Research Grant","[Granting Agency Name]",18000,"Principal Applicant","Collaborative pathogen genomics project with [Institution]"
+international_grant,2022,"International Research Supplement","[Agency Name]",15000,"Principal Applicant","Extension of prior international award for additional field seasons"
+fellowship,2021,"UF Graduate School Fellowship","University of Florida",0,"Recipient","Competitive departmental support — annual renewal"
+travel_award,2024,"APS Travel Award","American Phytopathological Society",800,"Recipient","Annual Meeting Memphis TN — oral presentation"
+travel_award,2023,"APS Travel Award","American Phytopathological Society",800,"Recipient","Annual Meeting Denver CO — poster presentation"
+departmental_award,2023,"Best Graduate Student Research Presentation","UF College of Agricultural and Life Sciences",500,"Recipient","Annual CALS Research Forum"
+departmental_award,2022,"Graduate Student Research Forum — 1st Place Poster","UF Department of Plant Pathology",250,"Recipient","Departmental research symposium"
