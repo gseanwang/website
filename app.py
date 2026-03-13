@@ -108,17 +108,27 @@ if page == "🏠  Professional Summary":
         # ── Profile photo ─────────────────────────────────────────────────────
         # To add your photo: drop profile.jpg into /assets/ and update photos.csv
         # Or paste an external URL (Google Drive, Imgur) into the `url` column.
-        _profile_photos = get_photos("summary", "about_me")
-        if _profile_photos:
-            ph_col, bio_col = st.columns([1, 3])
-            with ph_col:
-                profile_photo(
-                    _profile_photos[0]["src"],
-                    width=180,
-                    caption=_profile_photos[0].get("caption", ""),
-                )
-            with bio_col:
-                st.markdown(BIO["summary"])
+import base64, pathlib
+_assets = pathlib.Path(__file__).parent / "assets"
+_profile_file = next(
+    (f for f in _assets.iterdir()
+     if f.stem.lower() == "profile" and f.suffix.lower() in (".jpg",".jpeg",".png")),
+    None
+) if _assets.exists() else None
+
+if _profile_file:
+    _b64 = base64.b64encode(_profile_file.read_bytes()).decode()
+    _mime = "jpeg" if _profile_file.suffix.lower() in (".jpg",".jpeg") else "png"
+    ph_col, bio_col = st.columns([1, 3])
+    with ph_col:
+        st.markdown(
+            f'<div style="display:flex;justify-content:center">'
+            f'<img src="data:image/{_mime};base64,{_b64}" width="180" '
+            f'style="border-radius:50%;border:3px solid #2e7d32;object-fit:cover"/></div>',
+            unsafe_allow_html=True,
+        )
+    with bio_col:
+        st.markdown(BIO["summary"])
         else:
             # No photo yet — show bio full-width with a friendly placeholder
             st.info(
