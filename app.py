@@ -514,6 +514,32 @@ elif page == "🎓  Teaching & Leadership":
 - 2019 — Annual Meeting of Mycological Society ROC Taiwan
 """)
 
+    st.markdown("---")
+    st.markdown("### 📸 Activity Photos")
+
+    _TEACHING_KEYWORDS = (
+        "poster", "talk", "presentation", "conference",
+        "workshop", "leadership", "teaching", "outreach",
+    )
+    _assets_t = ROOT / "assets"
+    _activity_imgs = []
+    if _assets_t.exists():
+        for _f in sorted(_assets_t.iterdir()):
+            if (any(kw in _f.stem.lower() for kw in _TEACHING_KEYWORDS)
+                    and _f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")):
+                _activity_imgs.append(_f)
+
+    if _activity_imgs:
+        _render_image_grid(_activity_imgs, cols=3)
+    else:
+        st.info(
+            "📷 Upload photos to `/assets/` with these keywords in the filename:\n\n"
+            "**Presentations:** `poster_aps2025.jpg`, `talk_southern_aps.jpg`\n\n"
+            "**Workshops:** `workshop_4h_2025.jpg`, `workshop_k12.jpg`\n\n"
+            "**Leadership:** `leadership_ppgso.jpg`, `outreach_nfrec.jpg`",
+            icon="ℹ️",
+        )
+
 
 # =============================================================================
 # PAGE 5 — In the News
