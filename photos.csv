@@ -1,9 +1,3 @@
 photo_id,page,section,filename,url,caption,alt_text,display_order
 profile_main,summary,about_me,profile.jpg,,Sean Wang — Ph.D. Candidate in Plant Pathology UF,Profile photo of Sean Wang,1
 field_01,research,field_work,field_trial_01.jpg,,Establishing RCBD plots for the USDA-AFRI Organic Transitions trial (2023),Field trial plot establishment,1
-field_02,research,field_work,field_trial_02.jpg,,Disease severity assessment — strawberry Botrytis gray mold trial,Disease scoring in the field,2
-field_03,research,field_work,field_uav_01.jpg,,UAV pre-flight check before multispectral mapping mission,UAV pre-flight preparation,3
-field_04,research,field_work,,https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800,Placeholder — replace with your own field photo,Field work placeholder,4
-poster_01,leadership,presentations,poster_aps2023.jpg,,APS Annual Meeting 2023 Denver CO — poster presentation,APS 2023 poster,1
-poster_02,leadership,presentations,poster_aps2024.jpg,,APS Annual Meeting 2024 Memphis TN — oral presentation,APS 2024 presentation,2
-talk_01,leadership,presentations,,https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800,Placeholder — replace with your conference photo,Conference presentation placeholder,3
