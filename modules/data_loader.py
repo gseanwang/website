@@ -1,85 +1,73 @@
 # modules/data_loader.py
-# Centralised data-loading helpers. All read operations live here so
-# app.py stays free of I/O boilerplate.
-
 import pathlib
-import tomllib          # stdlib in Python 3.11+; install tomli for 3.9/3.10
+import tomllib
 import pandas as pd
 import streamlit as st
 
-ROOT = pathlib.Path(__file__).parent.parent   # repo root
+ROOT   = pathlib.Path(__file__).parent.parent
 ASSETS = ROOT / "assets"
 
 
-# ── Config ────────────────────────────────────────────────────────────────────
-
 @st.cache_data
 def load_config() -> dict:
-    """Load content_config.toml and return as a dict."""
-    config_path = ROOT / "content_config.toml"
-    with open(config_path, "rb") as f:
+    with open(ROOT / "content_config.toml", "rb") as f:
         return tomllib.load(f)
-
-
-# ── CSV helpers ───────────────────────────────────────────────────────────────
 
 @st.cache_data
 def load_publications() -> pd.DataFrame:
-    df = pd.read_csv(ROOT / "data" / "publications.csv")
-    return df.sort_values("year", ascending=False)
-
+    return pd.read_csv(ROOT / "data" / "publications.csv").sort_values("year", ascending=False)
 
 @st.cache_data
 def load_grants() -> pd.DataFrame:
-    df = pd.read_csv(ROOT / "data" / "grants.csv")
-    return df.sort_values("year", ascending=False)
-
+    return pd.read_csv(ROOT / "data" / "grants.csv").sort_values("year", ascending=False)
 
 @st.cache_data
 def load_presentations() -> pd.DataFrame:
-    df = pd.read_csv(ROOT / "data" / "presentations.csv")
-    return df.sort_values("year", ascending=False)
-
+    return pd.read_csv(ROOT / "data" / "presentations.csv").sort_values("year", ascending=False)
 
 @st.cache_data
 def load_research_projects() -> pd.DataFrame:
     return pd.read_csv(ROOT / "data" / "research_projects.csv")
 
-
 @st.cache_data
 def load_photos() -> pd.DataFrame:
-    """
-    Return photos.csv as a DataFrame.
-    Columns: photo_id, page, section, filename, url, caption, alt_text, display_order
-
-    Resolution priority per row:
-      1. filename set  →  load from assets/<filename>  (local, committed to repo)
-      2. url set       →  use URL directly              (Google Drive / Imgur / etc.)
-      3. neither       →  skip
-    """
     path = ROOT / "data" / "photos.csv"
     if not path.exists():
-        return pd.DataFrame(columns=[
-            "photo_id","page","section","filename","url",
-            "caption","alt_text","display_order",
-        ])
+        return pd.DataFrame(columns=["photo_id","page","section","filename","url","caption","alt_text","display_order"])
     df = pd.read_csv(path)
     df["display_order"] = pd.to_numeric(df["display_order"], errors="coerce").fillna(99)
     return df.sort_values("display_order")
 
 
-# ── Photo resolution helpers ──────────────────────────────────────────────────
+def _find_asset(stem: str) -> pathlib.Path | None:
+    """
+    Find a file in assets/ by stem (filename without extension).
+    Tries all image extensions regardless of what's written in the CSV.
+    e.g. stem='profile' will match profile.jpg, profile.jpeg, profile.png, etc.
+    """
+    if not ASSETS.exists():
+        return None
+    for f in ASSETS.iterdir():
+        if f.stem.lower() == stem.lower() and f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp", ".gif"):
+            return f
+    return None
 
-def resolve_photo(row: "pd.Series") -> "str | pathlib.Path | None":
-    """Return local Path, URL string, or None for a photos.csv row."""
+
+def resolve_photo(row) -> "str | pathlib.Path | None":
     filename = str(row.get("filename", "")).strip()
     url      = str(row.get("url", "")).strip()
 
     if filename and filename.lower() != "nan":
-        local = ASSETS / filename
-        if local.exists():
-            return local
-        return None          # listed but not yet uploaded — skip gracefully
+        # First try exact match
+        exact = ASSETS / filename
+        if exact.exists():
+            return exact
+        # Then try matching by stem only (ignores extension mismatch)
+        stem = pathlib.Path(filename).stem
+        found = _find_asset(stem)
+        if found:
+            return found
+        return None
 
     if url and url.lower() != "nan":
         return url
@@ -88,10 +76,6 @@ def resolve_photo(row: "pd.Series") -> "str | pathlib.Path | None":
 
 
 def get_photos(page: str, section: str) -> list:
-    """
-    Return [{src, caption, alt_text}, ...] for a given page + section.
-    Only rows with a resolvable source are included.
-    """
     df = load_photos()
     subset = df[(df["page"] == page) & (df["section"] == section)]
     result = []
@@ -106,11 +90,13 @@ def get_photos(page: str, section: str) -> list:
     return result
 
 
-# ── CV download ───────────────────────────────────────────────────────────────
-
-def cv_bytes(filename: str) -> bytes | None:
-    """Read CV PDF from /assets/. Returns None if not present."""
-    cv_path = ASSETS / filename
-    if cv_path.exists():
-        return cv_path.read_bytes()
+def cv_bytes(filename: str):
+    # Try exact match first, then stem match
+    exact = ASSETS / filename
+    if exact.exists():
+        return exact.read_bytes()
+    stem = pathlib.Path(filename).stem
+    found = _find_asset(stem)
+    if found:
+        return found.read_bytes()
     return None
