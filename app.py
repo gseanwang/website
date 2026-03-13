@@ -6,11 +6,12 @@
 # =============================================================================
 
 import sys
+import base64
 import pathlib
 import streamlit as st
 
-# Make sure local modules are importable regardless of working directory
-sys.path.insert(0, str(pathlib.Path(__file__).parent))
+ROOT = pathlib.Path(__file__).parent
+sys.path.insert(0, str(ROOT))
 
 from modules.data_loader import (
     load_config,
@@ -26,7 +27,7 @@ from modules.ui_components import (
     photo_gallery, profile_photo,
 )
 
-# ── Load all data up-front ────────────────────────────────────────────────────
+# ── Load all data ─────────────────────────────────────────────────────────────
 cfg     = load_config()
 P       = cfg["personal"]
 BIO     = cfg["bio"]
@@ -34,10 +35,10 @@ METRICS = cfg["metrics"]
 SKILLS  = cfg["skills"]
 COLLAB  = cfg["collaboration"]
 
-pubs    = load_publications()
-grants  = load_grants()
+pubs          = load_publications()
+grants        = load_grants()
 presentations = load_presentations()
-projects = load_research_projects()
+projects      = load_research_projects()
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -47,14 +48,40 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Global CSS ─────────────────────────────────────────────────────────────────
+# ── Global CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    hr  { border: none; border-top: 1px solid #e0e0e0; margin: 1.4rem 0; }
+    hr { border: none; border-top: 1px solid #e0e0e0; margin: 1.4rem 0; }
     [data-testid="stMetricValue"] { font-size: 1.55rem !important; }
-    a   { color: #2e7d32 !important; }
+    a { color: #2e7d32 !important; }
 </style>
 """, unsafe_allow_html=True)
+
+
+# ── Helper: find profile photo directly from assets/ ─────────────────────────
+def _find_profile_image() -> pathlib.Path | None:
+    """Scan assets/ for any file named 'profile' regardless of extension."""
+    assets = ROOT / "assets"
+    if not assets.exists():
+        return None
+    for f in assets.iterdir():
+        if f.stem.lower() == "profile" and f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"):
+            return f
+    return None
+
+
+def _render_profile_photo(path: pathlib.Path, width: int = 180) -> None:
+    """Render a circular profile photo from a local file path."""
+    mime = "jpeg" if path.suffix.lower() in (".jpg", ".jpeg") else "png"
+    b64  = base64.b64encode(path.read_bytes()).decode()
+    st.markdown(
+        f'<div style="display:flex;justify-content:center;margin-bottom:1rem">'
+        f'<img src="data:image/{mime};base64,{b64}" width="{width}" '
+        f'style="border-radius:50%;object-fit:cover;'
+        f'border:3px solid #2e7d32;box-shadow:0 2px 8px rgba(0,0,0,0.15)"/>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
 
 # =============================================================================
@@ -66,10 +93,11 @@ with st.sidebar:
         "University_of_Florida_logo.svg/320px-University_of_Florida_logo.svg.png",
         width=130,
     )
-    # Sidebar profile photo (small round version)
-    _sidebar_photos = get_photos("summary", "about_me")
-    if _sidebar_photos:
-        profile_photo(_sidebar_photos[0]["src"], width=90)
+
+    # Sidebar profile photo
+    _profile_path = _find_profile_image()
+    if _profile_path:
+        _render_profile_photo(_profile_path, width=90)
 
     st.markdown(f"### {P['full_name']}")
     st.caption(f"{P['title']}\n{P['institution']}")
@@ -100,40 +128,21 @@ if page == "🏠  Professional Summary":
     st.markdown("*Fungal Epidemiology · Integrated Pest Management · Sustainable Agriculture*")
     st.markdown("---")
 
-    # Bio + metrics
     col_bio, col_met = st.columns([3, 2], gap="large")
+
     with col_bio:
         st.markdown("### About Me")
 
-        # ── Profile photo ─────────────────────────────────────────────────────
-        # To add your photo: drop profile.jpg into /assets/ and update photos.csv
-        # Or paste an external URL (Google Drive, Imgur) into the `url` column.
-import base64, pathlib
-_assets = pathlib.Path(__file__).parent / "assets"
-_profile_file = next(
-    (f for f in _assets.iterdir()
-     if f.stem.lower() == "profile" and f.suffix.lower() in (".jpg",".jpeg",".png")),
-    None
-) if _assets.exists() else None
-
-if _profile_file:
-    _b64 = base64.b64encode(_profile_file.read_bytes()).decode()
-    _mime = "jpeg" if _profile_file.suffix.lower() in (".jpg",".jpeg") else "png"
-    ph_col, bio_col = st.columns([1, 3])
-    with ph_col:
-        st.markdown(
-            f'<div style="display:flex;justify-content:center">'
-            f'<img src="data:image/{_mime};base64,{_b64}" width="180" '
-            f'style="border-radius:50%;border:3px solid #2e7d32;object-fit:cover"/></div>',
-            unsafe_allow_html=True,
-        )
-    with bio_col:
-        st.markdown(BIO["summary"])
+        _profile_path = _find_profile_image()
+        if _profile_path:
+            ph_col, bio_col = st.columns([1, 3])
+            with ph_col:
+                _render_profile_photo(_profile_path, width=180)
+            with bio_col:
+                st.markdown(BIO["summary"])
         else:
-            # No photo yet — show bio full-width with a friendly placeholder
             st.info(
-                "📷 Add your profile photo: drop **`profile.jpg`** into `/assets/` "
-                "and make sure `photos.csv` has a row with page=summary, section=about_me.",
+                "📷 Add your profile photo: drop **`profile.jpg`** into the `/assets/` folder.",
                 icon="ℹ️",
             )
             st.markdown(BIO["summary"])
@@ -141,29 +150,26 @@ if _profile_file:
     with col_met:
         st.markdown("### Impact at a Glance")
         m = METRICS
-        st.metric("Acres Informed by Research",   m["acres_informed"],   m["acres_informed_delta"])
-        st.metric("Field Trial Area Managed",      m["trial_area"],       m["trial_area_delta"])
-        st.metric("Grants Secured",                m["grants_total"],     m["grants_delta"])
-        st.metric("Junior Scientists Mentored",    m["mentees"],          m["mentees_delta"])
-        st.metric("Peer-Reviewed Publications",    m["publications"],     m["publications_delta"])
+        st.metric("Acres Informed by Research",  m["acres_informed"],  m["acres_informed_delta"])
+        st.metric("Field Trial Area Managed",     m["trial_area"],      m["trial_area_delta"])
+        st.metric("Grants Secured",               m["grants_total"],    m["grants_delta"])
+        st.metric("Junior Scientists Mentored",   m["mentees"],         m["mentees_delta"])
+        st.metric("Peer-Reviewed Publications",   m["publications"],    m["publications_delta"])
 
     st.markdown("---")
 
-    # Education (driven by config)
+    # Education
     st.markdown("### Education")
     edu_items = cfg["education"]
-    edu_cols = st.columns(min(len(edu_items), 3))
+    edu_cols  = st.columns(min(len(edu_items), 3))
     for col, edu in zip(edu_cols, edu_items):
         with col:
             detail = f"Advisor: {edu['advisor']}<br><em>{edu['thesis']}</em>" if edu.get("advisor") else ""
-            card(
-                edu["degree"],
-                f"{edu['institution']}<br><em>{edu['year']}</em><br>{detail}",
-            )
+            card(edu["degree"], f"{edu['institution']}<br><em>{edu['year']}</em><br>{detail}")
 
     st.markdown("---")
 
-    # Skills (driven by config)
+    # Skills
     st.markdown("### Technical Skills")
     skill_cols = st.columns(len(SKILLS))
     for col, (category, items) in zip(skill_cols, SKILLS.items()):
@@ -193,40 +199,63 @@ elif page == "🔬  Research & Extension":
     )
     st.markdown("---")
 
-    # Impact row
     metric_row([
-        ("Field Trial Sites",             "Multiple",    "Southeast U.S."),
-        ("Trial Area per Season",         "~3 acres",    "Managed directly"),
-        ("Commercial Acreage Informed",   "~50,000",     "Grower recommendations"),
-        ("Fungicide Programs Evaluated",  "15+",         "FRAC group diversity"),
+        ("Field Trial Sites",            "Multiple", "Southeast U.S."),
+        ("Trial Area per Season",        "~3 acres", "Managed directly"),
+        ("Commercial Acreage Informed",  "~50,000",  "Grower recommendations"),
+        ("Fungicide Programs Evaluated", "15+",      "FRAC group diversity"),
     ])
     st.markdown("---")
 
-    # Project expanders (driven from CSV)
     st.markdown("### Primary Research Projects")
     for _, row in projects.iterrows():
         with st.expander(f"🌱  {row['title']}", expanded=True):
             p_col1, p_col2 = st.columns([3, 2])
-
             highlights = [h.strip() for h in str(row["highlights"]).split(";")]
             with p_col1:
                 st.markdown(
                     f"**Funder:** {row['funder']}  \n"
                     f"**Role:** {row['role']}  \n"
                     f"**Period:** {int(row['start_year'])}–{int(row['end_year'])}  \n\n"
-                    f"{row['description_short']}\n\n"
-                    f"**Highlights:**"
+                    f"{row['description_short']}\n\n**Highlights:**"
                 )
                 for h in highlights:
                     st.markdown(f"- {h}")
-
             with p_col2:
                 st.metric("Trial Area (acres)", f"~{int(row['acres_managed'])}", "Per season")
                 st.metric("Commercial Acres Informed", f"~{int(row['acres_informed']):,}")
 
     st.markdown("---")
 
-    # Remote sensing section
+    # Field work photos — direct scan, no CSV dependency
+    st.markdown("### Field Work")
+    _assets = ROOT / "assets"
+    _field_imgs = []
+    if _assets.exists():
+        for _f in sorted(_assets.iterdir()):
+            if "field" in _f.stem.lower() and _f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"):
+                _field_imgs.append(_f)
+
+    if _field_imgs:
+        _cols = st.columns(min(len(_field_imgs), 3))
+        for i, _img in enumerate(_field_imgs):
+            with _cols[i % 3]:
+                _mime = "jpeg" if _img.suffix.lower() in (".jpg", ".jpeg") else "png"
+                _b64  = base64.b64encode(_img.read_bytes()).decode()
+                st.markdown(
+                    f'<img src="data:image/{_mime};base64,{_b64}" '
+                    f'style="width:100%;border-radius:8px;margin-bottom:4px"/>',
+                    unsafe_allow_html=True,
+                )
+                st.caption(_img.stem.replace("_", " ").title())
+    else:
+        st.info(
+            "📷 Add field photos: drop image files named with 'field' into `/assets/` "
+            "(e.g. `field_trial_01.jpg`, `field_uav.jpeg`).",
+            icon="ℹ️",
+        )
+
+    st.markdown("---")
     st.markdown("### UAV & Remote Sensing Capabilities")
     rs1, rs2, rs3 = st.columns(3)
     with rs1:
@@ -243,48 +272,22 @@ elif page == "🔬  Research & Extension":
              "regression modelling to validate remote sensing proxies.")
 
     st.markdown("---")
-
-    # ── Field Work Photo Gallery ──────────────────────────────────────────────
-    _field_photos = get_photos("research", "field_work")
-    if _field_photos:
-        st.markdown("### Field Work")
-        st.markdown(
-            "A selection of images from multi-site field trials, UAV missions, "
-            "and disease assessment work."
-        )
-        photo_gallery(_field_photos, cols=min(len(_field_photos), 3))
-        st.markdown("---")
-    else:
-        # No photos yet — show instructions
-        st.info(
-            "📷 **Add field photos:** Drop image files into `/assets/` and add rows "
-            "to `data/photos.csv` with `page=research` and `section=field_work`. "
-            "Or paste external URLs (Google Drive / Imgur) into the `url` column.",
-            icon="ℹ️",
-        )
-        st.markdown("---")
-
     st.markdown("### Additional Research Contributions")
-
     with st.expander("Epidemiological Modelling & Disease Forecasting"):
-        st.markdown(
-            """
-            - Logistic and Gompertz disease progress models fitted to multi-year datasets
-              using nonlinear mixed-effects approaches.
-            - Weather-based forecasting parameters (temperature, leaf wetness, RH) as
-              predictors for infection event timing.
-            - Contributions to regional spray-timing alert systems.
-            """
-        )
+        st.markdown("""
+        - Logistic and Gompertz disease progress models fitted to multi-year datasets
+          using nonlinear mixed-effects approaches.
+        - Weather-based forecasting parameters (temperature, leaf wetness, RH) as
+          predictors for infection event timing.
+        - Contributions to regional spray-timing alert systems.
+        """)
     with st.expander("Molecular & Morphological Characterisation of Fungal Pathogens"):
-        st.markdown(
-            """
-            - Species delimitation of *Colletotrichum*, *Botrytis*, and *Fusarium* using
-              multi-locus phylogenetics (ITS, β-tubulin, ACT, GAPDH).
-            - Morphological characterisation under variable temperature and humidity regimes.
-            - Voucher culture collections deposited with institutional herbarium.
-            """
-        )
+        st.markdown("""
+        - Species delimitation of *Colletotrichum*, *Botrytis*, and *Fusarium* using
+          multi-locus phylogenetics (ITS, β-tubulin, ACT, GAPDH).
+        - Morphological characterisation under variable temperature and humidity regimes.
+        - Voucher culture collections deposited with institutional herbarium.
+        """)
 
 
 # =============================================================================
@@ -295,33 +298,28 @@ elif page == "📄  Publications & Grants":
     st.title("Publications & Grants")
     st.markdown("---")
 
-    # Summary metrics from CSV
-    n_pub   = len(pubs[pubs["type"] == "peer_reviewed"])
-    n_rev   = len(pubs[pubs["status"].isin(["under_review", "in_preparation"])])
-    n_ext   = len(pubs[pubs["type"] == "extension"])
+    n_pub = len(pubs[pubs["type"] == "peer_reviewed"])
+    n_rev = len(pubs[pubs["status"].isin(["under_review", "in_preparation"])])
+    n_ext = len(pubs[pubs["type"] == "extension"])
     metric_row([
-        ("Peer-Reviewed Publications", str(n_pub), "Published"),
+        ("Peer-Reviewed Publications",        str(n_pub), "Published"),
         ("Manuscripts Under Review / In Prep", str(n_rev), ""),
-        ("Extension Reports & Factsheets", str(n_ext), "UF/IFAS EDIS"),
+        ("Extension Reports & Factsheets",    str(n_ext), "UF/IFAS EDIS"),
     ])
-
     st.markdown("---")
 
-    # ── Publications by type ──────────────────────────────────────────────────
     def render_pub_row(row) -> None:
-        authors = row["authors"]
-        year    = int(row["year"])
-        title   = row["title"]
-        journal = row["journal"]
-        doi     = row["doi"] if str(row["doi"]) != "nan" else ""
-        note    = row["contribution_note"] if str(row["contribution_note"]) != "nan" else ""
-        vol     = row["volume"] if str(row["volume"]) != "nan" else ""
-        pages   = row["pages"] if str(row["pages"]) != "nan" else ""
-
+        authors  = row["authors"]
+        year     = int(row["year"])
+        title    = row["title"]
+        journal  = row["journal"]
+        doi      = row["doi"]  if str(row["doi"])  != "nan" else ""
+        note     = row["contribution_note"] if str(row["contribution_note"]) != "nan" else ""
+        vol      = row["volume"] if str(row["volume"]) != "nan" else ""
+        pages    = row["pages"]  if str(row["pages"])  != "nan" else ""
         doi_link = f" [https://doi.org/{doi}](https://doi.org/{doi})" if doi else ""
         vol_str  = f", {vol}, {pages}" if vol else ""
-        citation = f"**{authors}** ({year}). {title}. *{journal}*{vol_str}.{doi_link}"
-        pub_item(citation, note)
+        pub_item(f"**{authors}** ({year}). {title}. *{journal}*{vol_str}.{doi_link}", note)
 
     st.markdown("### Peer-Reviewed Publications")
     for _, row in pubs[pubs["type"] == "peer_reviewed"].iterrows():
@@ -330,9 +328,9 @@ elif page == "📄  Publications & Grants":
     st.markdown("---")
     st.markdown("### Manuscripts Under Review / In Preparation")
     for _, row in pubs[pubs["status"].isin(["under_review", "in_preparation"])].iterrows():
-        status_label = "Under review" if row["status"] == "under_review" else "In preparation"
+        label = "Under review" if row["status"] == "under_review" else "In preparation"
         row = row.copy()
-        row["journal"] = f"{row['journal']} (*{status_label}*)"
+        row["journal"] = f"{row['journal']} (*{label}*)"
         render_pub_row(row)
 
     st.markdown("---")
@@ -341,46 +339,36 @@ elif page == "📄  Publications & Grants":
         render_pub_row(row)
 
     st.markdown("---")
-
-    # ── Presentations ─────────────────────────────────────────────────────────
     st.markdown("### Conference Presentations")
     for _, row in presentations.iterrows():
-        p_type = row["type"].title()
-        award  = f" 🏆 *{row['award']}*" if str(row.get("award", "")) not in ("", "nan") else ""
+        award = f" 🏆 *{row['award']}*" if str(row.get("award", "")) not in ("", "nan") else ""
         pub_item(
-            f"**{row['authors']}** ({int(row['year'])}). {p_type}: *{row['title']}*. "
-            f"{row['event']}, {row['location']}.{award}"
+            f"**{row['authors']}** ({int(row['year'])}). {row['type'].title()}: "
+            f"*{row['title']}*. {row['event']}, {row['location']}.{award}"
         )
 
     st.markdown("---")
-
-    # ── Grants ────────────────────────────────────────────────────────────────
     st.markdown("### Grants, Awards & Fellowships")
     g_col1, g_col2 = st.columns(2)
 
-    int_grants = grants[grants["type"] == "international_grant"]
+    int_grants   = grants[grants["type"] == "international_grant"]
     other_awards = grants[grants["type"] != "international_grant"]
-    total_int = int_grants["amount_usd"].sum()
+    total_int    = int_grants["amount_usd"].sum()
 
     with g_col1:
         st.markdown("#### 💰 Competitive Grants")
         for _, row in int_grants.iterrows():
             amt = f"${int(row['amount_usd']):,}" if row["amount_usd"] > 0 else "—"
-            card(
-                f"{row['title']} · {amt}",
-                f"Agency: {row['agency']} · Year: {int(row['year'])}<br>"
-                f"<em>{row['description']}</em>",
-            )
+            card(f"{row['title']} · {amt}",
+                 f"Agency: {row['agency']} · Year: {int(row['year'])}<br><em>{row['description']}</em>")
         st.metric("Total International Grant Funding", f"~${total_int:,.0f}", "3 competitive awards")
 
     with g_col2:
         st.markdown("#### 🏆 Fellowships & Awards")
         for _, row in other_awards.iterrows():
             amt = f" · ${int(row['amount_usd']):,}" if row["amount_usd"] > 0 else ""
-            card(
-                f"{row['title']}{amt}",
-                f"{row['agency']} · {int(row['year'])}<br><em>{row['description']}</em>",
-            )
+            card(f"{row['title']}{amt}",
+                 f"{row['agency']} · {int(row['year'])}<br><em>{row['description']}</em>")
 
 
 # =============================================================================
@@ -392,88 +380,101 @@ elif page == "🎓  Leadership & Teaching":
     st.markdown("---")
 
     metric_row([
-        ("Junior Scientists Mentored", "7",   "Undergrad & early-career"),
-        ("Teaching Roles",             "2",   "TA + External Instructor"),
-        ("Leadership Positions",       "2+",  "Dept. & professional orgs"),
+        ("Junior Scientists Mentored", "7",  "Undergrad & early-career"),
+        ("Teaching Roles",             "2",  "TA + External Instructor"),
+        ("Leadership Positions",       "2+", "Dept. & professional orgs"),
     ])
     st.markdown("---")
 
-    # Mentoring
     st.markdown("### Research Mentoring")
     with st.expander("Undergraduate & Early-Career Researcher Mentorship — 7 mentees", expanded=True):
         m_col1, m_col2 = st.columns([3, 2])
         with m_col1:
-            st.markdown(
-                """
-                As a senior Ph.D. student and lab mentor, I have directly supervised
-                **7 junior scientists**, providing structured guidance in:
+            st.markdown("""
+            As a senior Ph.D. student and lab mentor, I have directly supervised
+            **7 junior scientists**, providing structured guidance in:
 
-                **Technical Training:**
-                - Field trial protocols — plot establishment, disease scoring, pesticide application.
-                - Laboratory techniques — fungal isolation, PCR, gel electrophoresis.
-                - Data management — RCBD design, data-entry standards, introductory R/SAS.
-                - UAV data collection and basic image-processing workflows.
+            **Technical Training:**
+            - Field trial protocols — plot establishment, disease scoring, pesticide application.
+            - Laboratory techniques — fungal isolation, PCR, gel electrophoresis.
+            - Data management — RCBD design, data-entry standards, introductory R/SAS.
+            - UAV data collection and basic image-processing workflows.
 
-                **Professional Development:**
-                - Science communication — abstract writing, poster and oral presentation skills.
-                - Research ethics and laboratory safety.
-                - Graduate school and employment application support.
-                """
-            )
+            **Professional Development:**
+            - Science communication — abstract writing, poster and oral presentation skills.
+            - Research ethics and laboratory safety.
+            - Graduate school and employment application support.
+            """)
         with m_col2:
             st.markdown("**Mentee Outcomes**")
             for label, val in [
-                ("Pursuing Graduate Degrees", "3"),
-                ("Accepted into REU Programs", "2"),
-                ("Co-authors on Extension Reports", "2"),
-                ("Full-time Research Positions", "1"),
+                ("Pursuing Graduate Degrees",      "3"),
+                ("Accepted into REU Programs",     "2"),
+                ("Co-authors on Extension Reports","2"),
+                ("Full-time Research Positions",   "1"),
             ]:
                 st.metric(label, val)
 
     st.markdown("---")
-
-    # Teaching
     st.markdown("### Teaching Experience")
     t1, t2 = st.columns(2)
     with t1:
-        card(
-            "🏫 DxR Health Academy — Instructor (2023)",
-            "Designed and delivered a week-long plant pathology & food security curriculum "
-            "for high school and early undergraduate students. Incorporated spore trapping, "
-            "microscopy, and disease triangle hands-on activities.",
-        )
+        card("🏫 DxR Health Academy — Instructor (2023)",
+             "Designed and delivered a week-long plant pathology & food security curriculum "
+             "for high school and early undergraduate students.")
     with t2:
-        card(
-            "🎓 University of Florida — Teaching Assistant (2022–2023)",
-            "PLP XXXX: Introductory Plant Pathology · ~40 students/semester. "
-            "Led weekly lab sessions; prepared specimens; graded reports and exams. "
-            "Student evaluation: 4.7 / 5.0.",
-        )
+        card("🎓 University of Florida — Teaching Assistant (2022–2023)",
+             "PLP XXXX: Introductory Plant Pathology · ~40 students/semester. "
+             "Student evaluation: 4.7 / 5.0.")
 
     st.markdown("---")
-
-    # Leadership
     st.markdown("### Leadership & Service")
     l1, l2 = st.columns(2)
     with l1:
         st.markdown("#### Departmental & University")
         card("Vice President — UF PPGSO (2023–2024)",
-             "Led seminar series, recruitment weekend, and outreach events. "
-             "Managed student programming budget; liaised with department administration.")
+             "Led seminar series, recruitment weekend, and outreach events.")
         card("Graduate Student Representative — UF CALS Council (2022–2023)",
              "Advocated for graduate student welfare, stipend equity, and professional development.")
-
     with l2:
         st.markdown("#### Professional Society Service")
         card("American Phytopathological Society — Student Member (2021–Present)",
-             "Annual meeting participant; peer reviewer for <em>Plant Disease</em> and "
-             "<em>Phytopathology</em>; volunteer at 2023 Annual Meeting.")
+             "Peer reviewer for <em>Plant Disease</em> and <em>Phytopathology</em>.")
         card("Florida Strawberry Research & Extension Foundation (2022–Present)",
-             "Annual presenter; translates trial results into grower recommendations; "
-             "assists with industry-facing factsheet development.")
+             "Annual presenter; translates trial results into grower recommendations.")
 
     st.markdown("---")
+    st.markdown("### Presentations & Posters Gallery")
 
+    # Direct scan for poster/talk images
+    _assets = ROOT / "assets"
+    _talk_imgs = []
+    if _assets.exists():
+        for _f in sorted(_assets.iterdir()):
+            if any(kw in _f.stem.lower() for kw in ("poster", "talk", "presentation", "conference")) \
+               and _f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"):
+                _talk_imgs.append(_f)
+
+    if _talk_imgs:
+        _cols = st.columns(min(len(_talk_imgs), 3))
+        for i, _img in enumerate(_talk_imgs):
+            with _cols[i % 3]:
+                _mime = "jpeg" if _img.suffix.lower() in (".jpg", ".jpeg") else "png"
+                _b64  = base64.b64encode(_img.read_bytes()).decode()
+                st.markdown(
+                    f'<img src="data:image/{_mime};base64,{_b64}" '
+                    f'style="width:100%;border-radius:8px;margin-bottom:4px"/>',
+                    unsafe_allow_html=True,
+                )
+                st.caption(_img.stem.replace("_", " ").title())
+    else:
+        st.info(
+            "📷 Add presentation photos: drop images named with 'poster', 'talk', or "
+            "'conference' into `/assets/` (e.g. `poster_aps2024.jpg`).",
+            icon="ℹ️",
+        )
+
+    st.markdown("---")
     st.markdown("### Workshops & Certifications")
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -482,24 +483,6 @@ elif page == "🎓  Leadership & Teaching":
         card("🧪 OSHA Lab Safety", "Hazardous materials, PPE protocols, emergency response")
     with c3:
         card("📊 R / SAS Statistical Computing", "Mixed models, ANOVA, nonlinear modelling — UF IFAS workshops")
-
-    st.markdown("---")
-
-    # ── Presentations & Posters Photo Gallery ────────────────────────────────
-    st.markdown("### Presentations & Posters Gallery")
-    _talk_photos = get_photos("leadership", "presentations")
-    if _talk_photos:
-        st.markdown(
-            "Conference presentations, poster sessions, and outreach events."
-        )
-        photo_gallery(_talk_photos, cols=min(len(_talk_photos), 3))
-    else:
-        st.info(
-            "📷 **Add presentation photos:** Drop images into `/assets/` and add rows "
-            "to `data/photos.csv` with `page=leadership` and `section=presentations`. "
-            "Or use external URLs for Google Drive or Imgur links.",
-            icon="ℹ️",
-        )
 
 
 # =============================================================================
@@ -519,14 +502,13 @@ elif page == "📬  Contact & CV":
             "or academic / industry opportunities."
         )
         st.markdown("---")
-
         contact_items = [
-            ("📧", "Email",         P["email"],       f"mailto:{P['email']}"),
-            ("🎓", "Google Scholar", "Scholar Profile", P["google_scholar"]),
-            ("💼", "LinkedIn",       "LinkedIn Profile", P["linkedin"]),
-            ("🐦", "Twitter / X",    "@SeanWang_PlantPath", P.get("twitter", "#")),
-            ("🏛️", "UF Page",        "UF Plant Pathology", P["uf_page"]),
-            ("📍", "Location",       P["location"],    None),
+            ("📧", "Email",         P["email"],                f"mailto:{P['email']}"),
+            ("🎓", "Google Scholar","Scholar Profile",          P["google_scholar"]),
+            ("💼", "LinkedIn",      "LinkedIn Profile",         P["linkedin"]),
+            ("🐦", "Twitter / X",   "@SeanWang_PlantPath",      P.get("twitter", "#")),
+            ("🏛️", "UF Page",       "UF Plant Pathology",       P["uf_page"]),
+            ("📍", "Location",      P["location"],              None),
         ]
         for icon, label, value, link in contact_items:
             link_html = f'<a href="{link}" target="_blank">{value}</a>' if link else value
@@ -539,11 +521,6 @@ elif page == "📬  Contact & CV":
 
     with c_right:
         st.markdown("### Download Full CV")
-        st.markdown(
-            "Download the complete, formatted Curriculum Vitae for full publication "
-            "references, grant details, and course history."
-        )
-
         raw_cv = cv_bytes(P["cv_filename"])
         if raw_cv:
             st.download_button(
@@ -555,8 +532,7 @@ elif page == "📬  Contact & CV":
             )
         else:
             st.info(
-                f"📎 Place **`{P['cv_filename']}`** in the `/assets/` folder to "
-                "activate the download button.",
+                f"📎 Place **`{P['cv_filename']}`** in the `/assets/` folder to activate the download button.",
                 icon="ℹ️",
             )
             st.button("⬇️  Download CV (PDF) — coming soon", disabled=True, use_container_width=True)
@@ -570,11 +546,9 @@ elif page == "📬  Contact & CV":
         st.markdown("### Current Status")
         s1, s2 = st.columns(2)
         with s1:
-            open_to_md = "\n".join(f"✅ {o}" for o in COLLAB["open_to"])
+            open_to_md = "<br>".join(f"✅ {o}" for o in COLLAB["open_to"])
             card("Open to Opportunities", open_to_md)
         with s2:
-            card(
-                "Timeline",
-                f"🎓 Expected graduation: {COLLAB['expected_graduation']}<br>"
-                "📅 Open to discussions now",
-            )
+            card("Timeline",
+                 f"🎓 Expected graduation: {COLLAB['expected_graduation']}<br>"
+                 "📅 Open to discussions now")
