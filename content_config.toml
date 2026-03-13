@@ -1,108 +1,117 @@
-# =============================================================================
 # content_config.toml — Single source of truth for all portfolio content
-# Edit this file to update the site without touching Python code.
-# =============================================================================
 
-# ── Personal Info ─────────────────────────────────────────────────────────────
 [personal]
 full_name        = "Chun-Hsiang (Sean) Wang"
 preferred_name   = "Sean Wang"
 title            = "Ph.D. Candidate in Plant Pathology"
 institution      = "University of Florida"
 department       = "Department of Plant Pathology"
-location         = "Gainesville, FL 32611, USA"
-email            = "c.wang@ufl.edu"
-linkedin         = "https://linkedin.com/in/seanwang-plantpath"
-google_scholar   = "https://scholar.google.com/citations?user=YOURID"
-twitter          = "https://twitter.com/SeanWang_PlantPath"
+location         = "Gainesville, FL, USA"
+email            = "c.wang1@ufl.edu"
+phone            = "(+1) 352-214-4386"
+linkedin         = "https://linkedin.com/in/gseanwang"
+google_scholar   = "https://scholar.google.com"
+twitter          = ""
 uf_page          = "https://plantpath.ifas.ufl.edu"
-cv_filename      = "Sean_Wang_CV.pdf"         # place file in /assets/
-profile_photo    = "profile.jpg"              # place file in /assets/  (optional)
+cv_filename      = "CV_Chun-Hsiang_Sean_Wang.pdf"
+profile_photo    = "profile.jpeg"
 
-# ── Bio Paragraph ─────────────────────────────────────────────────────────────
 [bio]
 summary = """
-I am a Ph.D. candidate in the Department of Plant Pathology at the University of Florida,
-where my research sits at the intersection of fungal epidemiology, integrated pest management
-(IPM), and sustainable agricultural systems. My dissertation investigates the epidemiological
-dynamics of soilborne and foliar fungal pathogens in specialty crops, with a focus on
-developing science-based management protocols that reduce synthetic fungicide inputs while
-maintaining economic viability for growers.
+Ph.D. Candidate in Plant Pathology specializing in **fungal epidemiology**, **seed pathology**,
+**IPM**, and **sustainable agriculture** within complex cropping systems, including
+Corn–Peanut–Carrot rotations at the University of Florida (Advisor: Dr. Mathews Paret).
+
+Proven expertise in managing large-scale (~3-acre) field trials using Completely Randomized Design (CRD),
+delivering research outcomes that directly inform management protocols for **~50,000 acres** of commercial
+carrot production nationally (Grimmway Farms).
+
+Advanced technical proficiency in ISTA protocols, multi-locus phylogenetic analyses (ITS, GAPDH, Alt a 1),
+UAV-based multispectral imaging (NDVI/NDRE), and Python/R/SAS for 4PL EC₅₀ dose-response modeling.
+
+Collaborative researcher with a track record of securing **~$48,000** in international grant funding,
+mentoring **7 junior scientists** across three institutions (UF, MOA, NTU), and translating complex
+findings into actionable grower protocols through on-farm extension.
 """
 
-# ── Impact Metrics (displayed on Summary page) ────────────────────────────────
 [metrics]
 acres_informed        = "~50,000"
-acres_informed_delta  = "Commercial production"
+acres_informed_delta  = "Carrot production nationally"
 trial_area            = "~3 acres"
-trial_area_delta      = "Multi-site trials"
+trial_area_delta      = "CRD field trials"
 grants_total          = "~$48,000"
-grants_delta          = "International & travel funding"
+grants_delta          = "International grant funding"
 mentees               = "7"
-mentees_delta         = "Undergrad & early-career"
-publications          = "2+"
-publications_delta    = "Plant Disease & others"
+mentees_delta         = "Across UF, MOA, NTU"
+publications          = "5+"
+publications_delta    = "Peer-reviewed & extension"
 
-# ── Education ─────────────────────────────────────────────────────────────────
 [[education]]
 degree      = "Ph.D. — Plant Pathology"
 institution = "University of Florida, Gainesville, FL"
-year        = "Expected 2025–2026"
-advisor     = "Dr. [Advisor Name]"
-thesis      = "Epidemiology and IPM of fungal pathogens in specialty crops"
+year        = "2022 – Present"
+advisor     = "Dr. Mathews Paret"
+thesis      = "Integrated Disease Management in Florida Carrot Production: Evaluating Pathogen Diversity, Control Practices, and Sustainable Farming Systems"
 
 [[education]]
-degree      = "M.S. — Plant Pathology"
-institution = "[Previous Institution]"
-year        = "[Year]"
+degree      = "M.Sc. — Plant Pathology and Microbiology"
+institution = "National Taiwan University, Taipei, Taiwan"
+year        = "2020"
+advisor     = "Dr. Hiran Ariyawansa"
+thesis      = "Epidemiology and management of Stemphylium leaf blight on Welsh onion in Sanxing, Taiwan"
+
+[[education]]
+degree      = "B.Sc. — Plant Pathology"
+institution = "National Chung Hsing University, Taichung, Taiwan"
+year        = "2018"
 advisor     = ""
 thesis      = ""
 
-[[education]]
-degree      = "B.S. — [Field]"
-institution = "[Undergraduate Institution, Country]"
-year        = "[Year]"
-advisor     = ""
-thesis      = ""
-
-# ── Skills (grouped) ──────────────────────────────────────────────────────────
 [skills]
-"Statistical Computing"      = ["R (tidyverse, lme4, ggplot2)", "SAS (PROC MIXED, PROC GLM)", "Python (pandas, NumPy, scikit-learn)"]
-"Remote Sensing & GIS"       = ["UAV / Drone Operations", "Multispectral Imaging (NDVI, disease mapping)", "ArcGIS / QGIS"]
-"Plant Pathology Methods"    = ["Disease Nursery Design", "Fungicide Efficacy Trials (FRAC groups)", "Inoculation & Bioassay Protocols", "Microscopy & Molecular Diagnostics"]
-"Scientific Communication"   = ["Peer-Reviewed Manuscripts", "Extension Publications", "Conference Presentations (APS, ISTA)"]
-"Research Management"        = ["Multi-site Field Trial Coordination", "Budget & Grant Reporting", "Mentorship of Junior Researchers"]
+"Data Analysis & Modeling"     = ["Python (4PL EC50, ML/AI)", "R (lme4, ggplot2, epidemiology)", "SAS (PROC MIXED)", "SPSS", "EC50 Dose-Response Modeling"]
+"Field & Lab Methods"          = ["CRD / RCBD Field Trial Design", "ISTA Seed Health Protocols", "Fungicide Efficacy Bioassays", "Multi-locus Phylogenetics (ITS, GAPDH, Alt a 1)", "Koch's Postulates & Pathogenicity"]
+"Remote Sensing & Tech"        = ["UAV / DJI Drone Operations", "NDVI & NDRE Multispectral Analysis", "AI/ML for Fungal Spore Imaging", "Streamlit Web App Development"]
+"Data Visualization & Design"  = ["Adobe Illustrator", "Adobe Photoshop", "Figma", "SigmaPlot"]
+"Scientific Communication"     = ["Peer-Reviewed Manuscripts", "UF/IFAS Extension Publications", "K-12 & Grower Outreach", "Grant Writing & Federal Reporting"]
 
-# ── Affiliations ──────────────────────────────────────────────────────────────
 [[affiliations]]
-org   = "American Phytopathological Society (APS)"
-role  = "Student Member"
-years = "2021–Present"
+org   = "American Phytopathological Society"
+role  = "Member — Diagnosticians, Emerging Disease, Graduate Student, IPM, Seed Pathology Committees"
+years = "2023 – Present"
 
 [[affiliations]]
 org   = "UF Plant Pathology Graduate Student Organization"
-role  = "Vice President"
-years = "2023–2024"
+role  = "Vice President (Event Coordinator)"
+years = "2025 – 2026"
 
 [[affiliations]]
-org   = "International Society for Plant Pathology (ISPP)"
-role  = "Member"
-years = "2022–Present"
+org   = "UF Plant Science Council"
+role  = "Co-Chair, Events Committee"
+years = "2025 – 2026"
 
-# ── Collaboration Interests ───────────────────────────────────────────────────
+[[affiliations]]
+org   = "Florida Phytopathological Society"
+role  = "Member"
+years = "2023 – Present"
+
+[[affiliations]]
+org   = "American Association for the Advancement of Science"
+role  = "Member"
+years = "2024 – Present"
+
 [collaboration]
 interests = [
-  "Organic and sustainable disease management systems",
-  "Remote sensing applications in plant pathology",
-  "Fungicide resistance monitoring and management",
-  "Quantitative epidemiology and disease forecasting",
-  "IPM adoption in specialty crop production",
-  "Graduate education and mentorship in plant sciences",
+  "Fungal epidemiology and disease management in specialty crops",
+  "Seed pathology and ISTA-standard seed health assays",
+  "Regenerative agriculture and organic transition systems",
+  "UAV-based remote sensing for disease quantification",
+  "AI/ML applications in plant disease diagnostics",
+  "IPM protocol development for commercial growers",
 ]
 open_to = [
   "Post-doctoral positions",
-  "Industry research roles",
+  "Industry research roles (seed, agrochemical, agtech)",
   "Extension specialist positions",
   "Collaborative research projects",
 ]
-expected_graduation = "2025–2026"
+expected_graduation = "2026"
