@@ -226,8 +226,19 @@ elif page == "🔬  Research & Experience":
                 for h in highlights:
                     st.markdown(f"- {h}")
             with p2:
-                st.metric("Trial Area (acres)", f"~{int(row['acres_managed'])}")
-                st.metric("Commercial Acres Informed", f"~{int(row['acres_informed']):,}")
+                acres_managed  = int(row['acres_managed'])
+                acres_informed = int(row['acres_informed'])
+                pid = str(row['project_id'])
+
+                # Trial Area — hide for lab/seed studies and usda_nifa
+                if acres_managed > 0 and pid != "usda_nifa":
+                    st.metric("Trial Area (acres)", f"~{acres_managed}")
+
+                # Commercial Impact — custom display per project
+                if pid == "usda_nifa":
+                    st.metric("Florida Ag Industry", "$8.8B", "Annual cash receipts (USDA-NASS 2024)")
+                elif acres_informed > 0:
+                    st.metric("Commercial Acres Informed", f"~{acres_informed:,}")
 
     st.markdown("---")
 
@@ -567,6 +578,25 @@ elif page == "📰  In the News":
             ),
             "url": "https://blogs.ifas.ufl.edu/hosdept/2025/03/14/stakeholders-researchers-and-regulators-committed-to-advancing-soil-health-through-long-term-adoption-of-cover-cropping/",
             "tags": ["USDA-NIFA", "Regenerative Agriculture", "Soil Health", "UF/IFAS"],
+        },
+        {
+            "emoji": "🇺🇸",
+            "outlet": "UF Department of Plant Pathology — Official Facebook",
+            "date": "January 29, 2026",
+            "title": "Plant Pathology students lead hands-on disease diagnostic workshop at the 10th Annual UF Plant Science Symposium",
+            "title_en": "",
+            "description": (
+                "The UF Department of Plant Pathology featured Sean Wang in this official post "
+                "covering the 10th Annual UF Plant Science Symposium (2026), a student-led event "
+                "bringing together researchers, students, and professionals to advance plant sciences. "
+                "As Co-Chair of the UF Plant Science Council Events Committee, Sean helped organize "
+                "and lead a hands-on workshop on plant disease diagnosis — focused on symptom "
+                "recognition and making informed diagnostic decisions. Sean appears in the post's "
+                "cover photo conducting microscopy examination of plant disease specimens during "
+                "the hands-on lab portion of the workshop."
+            ),
+            "url": "https://www.facebook.com/UFPlantPathology/posts/pfbid0v8sqqKXYAgZrMsbwYEgZ9p2HjFSnTUiGxfj8vKs24L4USTKomA7N8vDHWiGgjDWVl",
+            "tags": ["Plant Science Symposium", "Plant Disease Diagnostics", "Leadership", "UF Plant Pathology"],
         },
         {
             "emoji": "🇹🇼",
