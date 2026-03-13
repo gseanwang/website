@@ -203,7 +203,7 @@ elif page == "🔬  Research & Experience":
     st.markdown("---")
 
     metric_row([
-        ("Field Trial Area",           "~3 acres",  "CRD per season"),
+        ("Field Trial Area",           "~3 acres",  "CRD field trials"),
         ("Commercial Acres Informed",  "~50,000",   "Grimmway Farms, national"),
         ("U.S. Carrot Production",     "86%",        "Informed by fungicide trials"),
         ("Pesticide Reduction",        "80–90%",     "MOA IPM protocols, Taiwan"),
@@ -248,23 +248,23 @@ elif page == "🔬  Research & Experience":
     with st.expander("🇺🇸  Graduate Research Assistant & Project Coordinator — University of Florida (2022–Present)", expanded=True):
         st.markdown("""
 **Fungicide Efficacy & Application Technology**
-- Executed large-scale (~3-acre) CRD field trials comparing chemigation (solid-set overhead sprinklers) vs. tractor-mounted sprayers for Alternaria leaf blight control
+- Experience with large-scale (~3-acre) CRD field trials comparing chemigation (solid-set overhead sprinklers) vs. tractor-mounted sprayers for Alternaria leaf blight control
 - Integrated UAV-based DJI platforms for NDVI/NDRE multispectral analysis to quantify disease severity
-- Findings adopted by Grimmway Farms for ~50,000 acres of commercial carrot production nationally
+- Findings informed protocols at Grimmway Farms for ~50,000 acres of commercial carrot production nationally
 
 **Cropping Systems Pathology (USDA-NIFA Organic Transitions)**
-- Managed multi-year (2023–2026) field study across Conventional and Organic Carrot-Peanut-Corn rotations
+- Experience managing multi-year (2023–2026) field study across Conventional and Organic Carrot-Peanut-Corn rotations
 - Demonstrated regenerative management suppressed *Alternaria* leaf blight (AUDPC) in conventional systems
 - Identified *Gibberella* ear rot transitional risks in corn and evidence of soil suppressiveness against *Rhizoctonia solani*
 
 **Seed Pathology & Inoculum Dynamics**
-- Led four-year survey of commercial carrot seed lots; identified *A. alternata* as predominant pathogen via ITS, GAPDH, Alt a 1 phylogenetics
-- Evaluated FQ-Cu hybrid nanoparticle, conventional fungicides, and biocontrols via ISTA-standard bioassays
-- Used Python for 4PL regression modeling of EC50/EC90 fungicide sensitivity
+- Experience conducting four-year survey of commercial carrot seed lots; identified *A. alternata* as predominant pathogen via ITS, GAPDH, Alt a 1 phylogenetics
+- Knowledge of FQ-Cu hybrid nanoparticle, conventional fungicides, and biocontrols via ISTA-standard bioassays
+- Skills in Python for 4PL regression modeling of EC50/EC90 fungicide sensitivity
 
 **Diagnostic Pathology & AI Integration**
 - Identified *Pythium* spp. as causal agent of post-harvest lesions via Koch's postulates
-- Integrated ML frameworks for automated fungal spore image analysis
+- Knowledge of ML frameworks for fungal spore image analysis
 
 **Extension & Stakeholder Engagement**
 - Collaborated directly with Grimmway Farms; authored UF/IFAS EDIS extension guide for Florida carrot producers
@@ -273,15 +273,15 @@ elif page == "🔬  Research & Experience":
     with st.expander("🇹🇼  Research Assistant & Extension Specialist — Ministry of Agriculture, Hualien Station (2021–2022)"):
         st.markdown("""
 - Authored **4 technical extension bulletins** on IPM for Welsh Onion and Watermelon; protocols reduced pesticide usage by **80–90%**
-- Conducted regional RT-PCR disease surveillance for viral outbreaks in Watermelon, Welsh Onion, and Chayote
-- Established virus-free propagation systems highlighted by national media
+- Skills in regional RT-PCR disease surveillance for viral outbreaks in Watermelon, Welsh Onion, and Chayote
+- Established virus-free propagation systems, reported on by national media
 - Optimized *Bacillus* spp. fermentation parameters; screened isolates against *Colletotrichum* spp. and *Stagonosporopsis* spp.
 """)
 
     with st.expander("🇹🇼  Graduate Research Assistant — National Taiwan University (2018–2021)"):
         st.markdown("""
 - Secured **~$48,333 USD** in competitive government grants (Ministry of Agriculture, Taiwan) as Co-Author & Lead Investigator
-- Performed multi-locus phylogenetics (MEGA, RAxML) characterizing *Stemphylium* spp. diversity — first-author publication in *Plant Disease*
+- Skills in multi-locus phylogenetics (MEGA, RAxML); characterized *Stemphylium* spp. diversity — first-author publication in *Plant Disease*
 - Conducted field scouting, fungicide resistance profiling, and EC50 sensitivity assays across major Welsh onion production regions
 - Used R and SAS for resistance profiling and epidemiological modeling
 """)
