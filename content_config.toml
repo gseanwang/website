@@ -18,20 +18,13 @@ profile_photo    = "profile.jpeg"
 
 [bio]
 summary = """
-Ph.D. Candidate in Plant Pathology specializing in **fungal epidemiology**, **seed pathology**,
-**IPM**, and **sustainable agriculture** within complex cropping systems, including
-Corn–Peanut–Carrot rotations at the University of Florida (Advisor: Dr. Mathews Paret).
+Ph.D. Candidate in Plant Pathology at the University of Florida (Advisors: Dr. Mathews Paret and Dr. Jeffrey Rollins), focusing on **fungal epidemiology**, **seed pathology**, **IPM**, and **sustainable agriculture** within Corn–Peanut–Carrot crop rotations.
 
-Proven expertise in managing large-scale (~3-acre) field trials using Completely Randomized Design (CRD),
-delivering research outcomes that directly inform management protocols for **~50,000 acres** of commercial
-carrot production nationally (Grimmway Farms).
+Experience managing ~3-acre field trials using Completely Randomized Design (CRD), providing research data to inform management protocols for **~50,000 acres** of commercial carrot production nationally (Grimmway Farms).
 
-Advanced technical proficiency in ISTA protocols, multi-locus phylogenetic analyses (ITS, GAPDH, Alt a 1),
-UAV-based multispectral imaging (NDVI/NDRE), and Python/R/SAS for 4PL EC₅₀ dose-response modeling.
+Skills include ISTA protocols, multi-locus phylogenetic analyses (ITS, GAPDH, Alt a 1), UAV-based multispectral imaging (NDVI/NDRE), and utilizing Python/R/SAS for 4PL EC₅₀ dose-response modeling.
 
-Collaborative researcher with a track record of securing **~$48,000** in international grant funding,
-mentoring **7 junior scientists** across three institutions (UF, MOA, NTU), and translating complex
-findings into actionable grower protocols through on-farm extension.
+Experience securing **~$48,000** in international grant funding, mentoring **7 junior scientists** across three institutions (UF, MOA, NTU), and translating research findings into actionable grower protocols through on-farm extension.
 """
 
 [metrics]
@@ -50,7 +43,7 @@ publications_delta    = "Peer-reviewed & extension"
 degree      = "Ph.D. — Plant Pathology"
 institution = "University of Florida, Gainesville, FL"
 year        = "2022 – Present"
-advisor     = "Dr. Mathews Paret"
+advisor     = "Dr. Mathews Paret (Advisor); Dr. Jeffrey Rollins (Co-Advisor)"
 thesis      = "Integrated Disease Management in Florida Carrot Production: Evaluating Pathogen Diversity, Control Practices, and Sustainable Farming Systems"
 
 [[education]]
