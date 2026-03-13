@@ -96,11 +96,10 @@ def _render_image_grid(paths: list, cols: int = 3) -> None:
 # SIDEBAR
 # =============================================================================
 with st.sidebar:
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/"
-        "University_of_Florida_logo.svg/320px-University_of_Florida_logo.svg.png",
-        width=130,
-    )
+    uf_logo = _find_image("uf_logo") 
+    if uf_logo:
+        st.image(str(uf_logo), width=130)
+        
     _p = _find_image("profile")
     if _p:
         _render_circle_photo(_p, width=90)
