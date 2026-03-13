@@ -98,7 +98,7 @@ def _render_image_grid(paths: list, cols: int = 3) -> None:
 with st.sidebar:
     uf_logo = _find_image("uf_logo") 
     if uf_logo:
-        st.image(str(uf_logo), width=130)
+        st.image(str(uf_logo), width=80)
         
     _p = _find_image("profile")
     if _p:
