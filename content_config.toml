@@ -63,7 +63,7 @@ thesis      = ""
 [skills]
 "Data Analysis & Modeling"     = ["Python (4PL EC50, ML/AI)", "R (lme4, ggplot2, epidemiology)", "SAS (PROC MIXED)", "SPSS", "EC50 Dose-Response Modeling"]
 "Field & Lab Methods"          = ["CRD / RCBD Field Trial Design", "ISTA Seed Health Protocols", "Fungicide Efficacy Bioassays", "Multi-locus Phylogenetics (ITS, GAPDH, Alt a 1)", "Koch's Postulates & Pathogenicity"]
-"Remote Sensing & Tech"        = ["UAV / DJI Drone Operations", "NDVI & NDRE Multispectral Analysis", "AI/ML for Fungal Spore Imaging", "Streamlit Web App Development"]
+"Remote Sensing & Tech"        = ["AI/ML for Fungal Spore Imaging", "Streamlit Web App Development"]
 "Data Visualization & Design"  = ["Adobe Illustrator", "Adobe Photoshop", "Figma", "SigmaPlot"]
 "Scientific Communication"     = ["Peer-Reviewed Manuscripts", "UF/IFAS Extension Publications", "K-12 & Grower Outreach", "Grant Writing & Federal Reporting"]
 
