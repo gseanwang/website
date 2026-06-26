@@ -1,9 +1,9 @@
-# Sean Wang — Ph.D. Candidate Portfolio
+# Sean Wang — Plant Pathologist, Ph.D. — Portfolio
 
 **🌐 Live site: https://seanwang.streamlit.app**
 
-A multi-page Streamlit portfolio for **Chun-Hsiang (Sean) Wang**, Ph.D. Candidate in
-Plant Pathology at the University of Florida.
+A multi-page Streamlit portfolio for **Chun-Hsiang (Sean) Wang**, plant pathologist
+(Ph.D., University of Florida).
 
 ---
 

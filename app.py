@@ -28,7 +28,7 @@ projects      = load_research_projects()
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Sean Wang | Ph.D. Candidate Portfolio",
+    page_title="Sean Wang | Plant Pathologist, Ph.D.",
     page_icon="🌿",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -155,6 +155,15 @@ if page == "🏠  Professional Summary":
 
     st.markdown("---")
 
+    # Featured video — field research
+    st.markdown("### 🎥 In the Field")
+    vid_col, _vid_spacer = st.columns([3, 2], gap="large")
+    with vid_col:
+        st.video("https://www.youtube.com/watch?v=z9ULZtZQ7u4")
+        st.caption("*Solving Problems in the Field*")
+
+    st.markdown("---")
+
     # Education
     st.markdown("### Education")
     edu_items = cfg["education"]
@@ -244,7 +253,12 @@ elif page == "🔬  Research & Experience":
     # ── Professional Experience ───────────────────────────────────────────────
     st.markdown("### Professional Experience")
 
-    with st.expander("🇺🇸  Graduate Research Assistant & Project Coordinator — University of Florida (2022–Present)", expanded=True):
+    with st.expander("🇺🇸  Postdoctoral Research Associate (Incoming) — University of Florida / IFAS, North Florida REC, Quincy, FL · Aug 2026", expanded=True):
+        st.markdown("""
+- Incoming postdoctoral researcher at the UF/IFAS **North Florida Research and Education Center (NFREC)**, Quincy, FL — beginning **August 2026**
+""")
+
+    with st.expander("🇺🇸  Graduate Research Assistant & Project Coordinator — University of Florida (2022–2026)", expanded=True):
         st.markdown("""
 **Fungicide Efficacy & Application Technology**
 - Experience with large-scale (~3-acre) CRD field trials comparing chemigation (solid-set overhead sprinklers) vs. tractor-mounted sprayers for Alternaria leaf blight control
@@ -711,5 +725,6 @@ elif page == "📬  Contact & CV":
             card("Open To", open_to_md)
         with s2:
             card("Timeline",
-                 f"🎓 Expected graduation: {COLLAB['expected_graduation']}<br>"
+                 f"🎓 Ph.D. completed: {COLLAB['expected_graduation']}<br>"
+                 "🔬 Incoming Postdoc — UF/IFAS NFREC, Quincy (Aug 2026)<br>"
                  "📅 Available for discussions now")

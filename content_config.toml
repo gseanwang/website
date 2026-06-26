@@ -3,7 +3,7 @@
 [personal]
 full_name        = "Chun-Hsiang (Sean) Wang"
 preferred_name   = "Sean Wang"
-title            = "Ph.D. Candidate in Plant Pathology"
+title            = "Plant Pathologist, Ph.D."
 institution      = "University of Florida"
 department       = "Department of Plant Pathology"
 location         = "Gainesville, FL, USA"
@@ -18,13 +18,11 @@ profile_photo    = "profile.jpeg"
 
 [bio]
 summary = """
-Ph.D. Candidate in Plant Pathology at the University of Florida (Advisors: Dr. Mathews Paret and Dr. Jeffrey Rollins), focusing on **fungal epidemiology**, **seed pathology**, **IPM**, and **sustainable agriculture** within Corn–Peanut–Carrot crop rotations.
+Plant pathologist with a Ph.D. from the University of Florida (Advisors: Dr. Mathews Paret and Dr. Jeffrey Rollins), specializing in **applied disease management**, **crop protection**, **seed health**, and **pathogen diagnostics**.
 
-Experience managing ~3-acre field trials using Completely Randomized Design (CRD), providing research data to inform management protocols for **~50,000 acres** of commercial carrot production nationally (Grimmway Farms).
+My doctoral research targeted carrot diseases — especially **Alternaria leaf blight** — connecting field trials, seed treatment and seed health evaluation, pathogen identification, and phylogenetic analysis to practical disease management across **conventional, organic, and regenerative** production systems.
 
-Skills include ISTA protocols, multi-locus phylogenetic analyses (ITS, GAPDH, Alt a 1), UAV-based multispectral imaging (NDVI/NDRE), and utilizing Python/R/SAS for 4PL EC₅₀ dose-response modeling.
-
-Experience securing **~$48,000** in international grant funding, mentoring **7 junior scientists** across three institutions (UF, MOA, NTU), and translating research findings into actionable grower protocols through on-farm extension.
+This work informs management protocols for **~50,000 acres** of commercial carrot production nationally. I focus on applied agricultural R&D that generates high-quality, practical data to support growers and product development.
 """
 
 [metrics]
@@ -42,7 +40,7 @@ publications_delta    = "Peer-reviewed & extension"
 [[education]]
 degree      = "Ph.D. — Plant Pathology"
 institution = "University of Florida, Gainesville, FL"
-year        = "2022 – Present"
+year        = "2022 – 2026"
 advisor     = "Dr. Mathews Paret (Advisor); Dr. Jeffrey Rollins (Co-Advisor)"
 thesis      = "Integrated Disease Management in Florida Carrot Production: Evaluating Pathogen Diversity, Control Practices, and Sustainable Farming Systems"
 
@@ -102,9 +100,7 @@ interests = [
   "IPM protocol development for commercial growers",
 ]
 open_to = [
-  "Post-doctoral positions",
   "Industry research roles (seed, agrochemical, agtech)",
-  "Extension specialist positions",
   "Collaborative research projects",
 ]
 expected_graduation = "2026"
