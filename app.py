@@ -352,7 +352,7 @@ elif page == "📄  Publications & Grants":
         note    = str(row.get("contribution_note","")).strip()
         vol     = str(row.get("volume","")).strip()
         pages   = str(row.get("pages","")).strip()
-        doi_link = f" [[DOI]](https://doi.org/{doi})" if doi and doi != "nan" else ""
+        doi_link = f" [DOI](https://doi.org/{doi})" if doi and doi != "nan" else ""
         vol_str  = f", {vol}" if vol and vol != "nan" else ""
         pgs_str  = f", {pages}" if pages and pages != "nan" else ""
         pub_item(f"**{authors}** ({year}). {title}. *{journal}*{vol_str}{pgs_str}.{doi_link}",
