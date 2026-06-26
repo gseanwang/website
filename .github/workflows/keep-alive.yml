@@ -1,0 +1,63 @@
+name: Keep Streamlit app awake
+
+# Visits the live app on a schedule so Streamlit Community Cloud never marks it
+# idle. Uses a real headless browser (Playwright) so a websocket session opens,
+# which a plain HTTP ping would not do. Also clicks the "wake" button if the app
+# happens to be asleep when the run fires.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes (UTC); GitHub may delay under load
+  workflow_dispatch: {}        # lets you trigger a run manually from the Actions tab
+
+# If a run is still going when the next fires, skip the new one instead of stacking.
+concurrency:
+  group: keep-alive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Playwright (Chromium)
+        run: |
+          pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Visit app (and wake it if asleep)
+        env:
+          APP_URL: https://seanwang.streamlit.app
+        run: |
+          python - <<'PY'
+          import os
+          from playwright.sync_api import sync_playwright
+
+          url = os.environ["APP_URL"]
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              # Streamlit holds a persistent websocket, so "networkidle" never
+              # settles — load the DOM, then linger so the session registers.
+              page.goto(url, wait_until="domcontentloaded", timeout=120_000)
+
+              # If the app is asleep it shows a wake button; click it if present.
+              for label in ("Yes, get this app back up", "get this app back up", "back up"):
+                  try:
+                      btn = page.get_by_text(label, exact=False)
+                      if btn.count() > 0:
+                          btn.first.click(timeout=5_000)
+                          print(f"Clicked wake button matching: {label!r}")
+                          break
+                  except Exception:
+                      pass
+
+              # Keep the tab open ~25s so the websocket counts as live traffic.
+              page.wait_for_timeout(25_000)
+              print("Visited", url, "| page title:", page.title())
+              browser.close()
+          PY
