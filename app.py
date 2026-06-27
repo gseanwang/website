@@ -77,6 +77,12 @@ def _render_circle_photo(path: pathlib.Path, width: int = 180) -> None:
         unsafe_allow_html=True,
     )
 
+_PHOTO_CAPTIONS = {
+    "talk_carrot_conference_2026_hochmuth": "42nd International Carrot Conference, Bakersfield, CA · June 2026",
+    "talk_carrot_conference_2026_slide":    "Presenting at the 42nd International Carrot Conference",
+    "talk_carrot_conference_2026_stage":    "Oral presentation, 42nd International Carrot Conference",
+}
+
 def _render_image_grid(paths: list, cols: int = 3) -> None:
     if not paths:
         return
@@ -89,7 +95,7 @@ def _render_image_grid(paths: list, cols: int = 3) -> None:
                 f'style="width:100%;border-radius:8px;margin-bottom:4px"/>',
                 unsafe_allow_html=True,
             )
-            st.caption(p.stem.replace("_", " ").title())
+            st.caption(_PHOTO_CAPTIONS.get(p.stem, p.stem.replace("_", " ").title()))
 
 
 # =============================================================================
