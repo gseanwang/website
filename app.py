@@ -293,29 +293,27 @@ elif page == "🔬  Research & Experience":
 - Incoming postdoctoral researcher at the UF/IFAS **North Florida Research and Education Center (NFREC)**, Quincy, FL — beginning **August 2026**
 """)
 
-    with st.expander("🇺🇸  Graduate Research Assistant & Project Coordinator — University of Florida (2022–2026)", expanded=True):
+    with st.expander("🇺🇸  Graduate Research Assistant — University of Florida (2022–2026)", expanded=True):
         st.markdown("""
+Led applied plant pathology research on carrot diseases — especially *Alternaria* leaf blight — integrating field, greenhouse, and lab work with seed-treatment evaluation, pathogen diagnostics, and phylogenetics to inform practical disease-management decisions.
+
 **Fungicide Efficacy & Application Technology**
-- Experience with large-scale (~3-acre) CRD field trials comparing chemigation (solid-set overhead sprinklers) vs. tractor-mounted sprayers for Alternaria leaf blight control
-- Integrated UAV-based DJI platforms for NDVI/NDRE multispectral analysis to quantify disease severity
-- Findings informed protocols at Grimmway Farms for ~50,000 acres of commercial carrot production nationally
+- Designed and ran ~3-acre CRD field trials comparing chemigation (solid-set overhead sprinklers) against tractor-mounted sprayers for *Alternaria* leaf blight; results helped California carrot producers, including Grimmway Farms, build practical spray programs
+- Scored disease severity by AUDPC and UAV-based NDVI/NDRE imaging, with crop-safety and treatment-performance comparisons across application methods
 
 **Cropping Systems Pathology (USDA-NIFA Organic Transitions)**
-- Experience managing multi-year (2023–2026) field study across Conventional and Organic Carrot-Peanut-Corn rotations
-- Demonstrated regenerative management suppressed *Alternaria* leaf blight (AUDPC) in conventional systems
-- Identified *Gibberella* ear rot transitional risks in corn and evidence of soil suppressiveness against *Rhizoctonia solani*
+- Ran a multi-year (2023–2026) field study across conventional, organic, and regenerative carrot–peanut–corn rotations, assessing *Alternaria* leaf blight, corn ear rot, and soilborne disease pressure
+- Generated the preliminary data and wrote the project narrative for the submitted USDA-NIFA OREI proposal built on this study (2026)
 
-**Seed Pathology & Inoculum Dynamics**
-- Experience conducting four-year survey of commercial carrot seed lots; identified *A. alternata* as predominant pathogen via ITS, GAPDH, Alt a 1 phylogenetics
-- Knowledge of FQ-Cu hybrid nanoparticle, conventional fungicides, and biocontrols via ISTA-standard bioassays
-- Skills in Python for 4PL regression modeling of EC50/EC90 fungicide sensitivity
+**Seed Pathology & Diagnostics**
+- Surveyed 84 isolates over a four-year sampling of commercial carrot seed lots and established *A. alternata* as the dominant Florida ALB pathogen via multi-locus phylogenetics (ITS, GAPDH, *Alt a 1*)
+- Evaluated seed treatments for germination, emergence, vigor, seed-borne disease suppression, and crop safety under ISTA-aligned protocols — including a novel FQ-Cu hybrid nanoparticle alongside conventional fungicides and biocontrols
+- Profiled fungicide sensitivity (EC50/EC90) with 4PL dose-response modeling in Python
+- Diagnosed *Pythium* contamination in packing facilities (Koch's postulates) to support corrective action
 
-**Diagnostic Pathology & AI Integration**
-- Identified *Pythium* spp. as causal agent of post-harvest lesions via Koch's postulates
-- Knowledge of ML frameworks for fungal spore image analysis
-
-**Extension & Stakeholder Engagement**
-- Collaborated directly with Grimmway Farms; authored UF/IFAS EDIS extension guide for Florida carrot producers
+**Extension & Collaboration**
+- Authored the UF/IFAS EDIS guide on carrot *Alternaria* leaf blight management for Florida producers
+- Partnered with the Wisconsin resistance-breeding team and California & Florida growers to translate findings into crop-protection decisions
 """)
 
     with st.expander("🇹🇼  Research Assistant & Extension Specialist — Ministry of Agriculture, Hualien Station (2021–2022)"):
