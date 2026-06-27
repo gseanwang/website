@@ -307,7 +307,7 @@ Led applied plant pathology research on carrot diseases — especially *Alternar
 
 **Seed Pathology & Diagnostics**
 - Surveyed 84 isolates over a four-year sampling of commercial carrot seed lots and established *A. alternata* as the dominant Florida ALB pathogen via multi-locus phylogenetics (ITS, GAPDH, *Alt a 1*)
-- Evaluated seed treatments for germination, emergence, vigor, seed-borne disease suppression, and crop safety under ISTA-aligned protocols — including a novel FQ-Cu hybrid nanoparticle alongside conventional fungicides and biocontrols
+- Evaluated seed treatments for germination, emergence, vigor, seed-borne disease suppression, and crop safety under ISTA-aligned protocols — including a novel nanoparticle alongside conventional fungicides and biocontrols
 - Profiled fungicide sensitivity (EC50/EC90) with 4PL dose-response modeling in Python
 - Diagnosed *Pythium* contamination in packing facilities (Koch's postulates) to support corrective action
 
