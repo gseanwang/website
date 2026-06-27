@@ -81,7 +81,8 @@ _PHOTO_CAPTIONS = {
     "talk_carrot_conference_2026_hochmuth": "42nd International Carrot Conference, Bakersfield, CA · June 2026",
     "talk_carrot_conference_2026_slide":    "Presenting at the 42nd International Carrot Conference",
     "talk_carrot_conference_2026_stage":    "Oral presentation, 42nd International Carrot Conference",
-    "leadership_psc_oregon_fieldtrip_2026": "UF Plant Science Council Oregon field trip — Dorena Genetic Resource Center (May 2026)",
+    "leadership_psc_oregon_trip_2026": "UF Plant Science Council Oregon field trip — Dorena Genetic Resource Center (May 2026)",
+    "field_california_sample_collection": "Collecting carrot samples in a California field",
 }
 
 def _render_image_grid(paths: list, cols: int = 3) -> None:
@@ -434,7 +435,8 @@ elif page == "📄  Publications & Grants":
 
     g1, g2 = st.columns(2)
     competitive = grants[grants["type"].isin(["international_grant"])]
-    awards      = grants[~grants["type"].isin(["international_grant"])]
+    submitted   = grants[grants["type"] == "submitted"]
+    awards      = grants[~grants["type"].isin(["international_grant", "submitted"])]
 
     with g1:
         st.markdown("#### Competitive Grants")
@@ -452,6 +454,15 @@ elif page == "📄  Publications & Grants":
             amt = f" · ${int(row['amount_usd']):,}" if row["amount_usd"] > 0 else ""
             card(f"{row['title']}{amt}",
                  f"{row['agency']} · {int(row['year'])}<br><em>{row['description']}</em>")
+
+    if not submitted.empty:
+        st.markdown("---")
+        st.markdown("#### Grants Under Review")
+        st.caption("Submitted proposals — pending review; not yet funded.")
+        for _, row in submitted.iterrows():
+            card(row["title"],
+                 f"**Agency:** {row['agency']}  ·  **Submitted:** {int(row['year'])}<br>"
+                 f"**Role:** {row['role']}<br><em>{row['description']}</em>")
 
 
 # =============================================================================
