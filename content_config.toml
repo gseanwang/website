@@ -1,7 +1,7 @@
 # content_config.toml — Single source of truth for all portfolio content
 
 [personal]
-full_name        = "Chun-Hsiang (Sean) Wang"
+full_name        = "Sean (Chun-Hsiang) Wang"
 preferred_name   = "Sean Wang"
 title            = "Plant Pathologist, Ph.D."
 institution      = "University of Florida"
@@ -9,7 +9,7 @@ department       = "Department of Plant Pathology"
 location         = "Gainesville, FL, USA"
 email            = "c.wang1@ufl.edu"
 phone            = "(+1) 352-214-4386"
-linkedin         = "https://www.linkedin.com/in/sean-wang-576b53351/"
+linkedin         = "https://www.linkedin.com/in/sean-wang-576b53351"
 google_scholar   = "https://scholar.google.com/citations?user=dRJUeKEAAAAJ&hl=en"
 twitter          = ""
 uf_page          = "https://plantpath.ifas.ufl.edu"

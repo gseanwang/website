@@ -128,10 +128,10 @@ if page == "🏠  Professional Summary":
     st.subheader(f"{P['title']} | {P['institution']}")
     st.markdown("*Fungal Epidemiology · Seed Pathology · IPM · Sustainable Agriculture*")
 
-    # Social links (LinkedIn)
+    # Social links (LinkedIn + Google Scholar)
     st.markdown(
         f"""
-        <div style="margin-top:0.5rem">
+        <div style="margin-top:0.5rem;display:flex;gap:10px;flex-wrap:wrap">
           <a href="{P['linkedin']}" target="_blank"
              style="display:inline-flex;align-items:center;gap:7px;
                     text-decoration:none;color:#0A66C2;font-weight:600;
@@ -142,6 +142,19 @@ if page == "🏠  Professional Summary":
               <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
             </svg>
             LinkedIn
+          </a>
+          <a href="{P['google_scholar']}" target="_blank"
+             style="display:inline-flex;align-items:center;gap:7px;
+                    text-decoration:none;color:#4285F4;font-weight:600;
+                    border:1px solid #4285F4;border-radius:6px;
+                    padding:5px 13px;font-size:0.9rem;line-height:1">
+            <svg width="18" height="18" viewBox="0 0 512 512" fill="#4285F4"
+                 xmlns="http://www.w3.org/2000/svg" aria-label="Google Scholar">
+              <path d="M256 411.12L0 202.667 256 0z"/>
+              <path d="M256 411.12l256-208.453L256 0z" fill-opacity="0.7"/>
+              <circle cx="256" cy="362" r="118"/>
+            </svg>
+            Google Scholar
           </a>
         </div>
         """,

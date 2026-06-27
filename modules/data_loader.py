@@ -8,28 +8,22 @@ ROOT   = pathlib.Path(__file__).parent.parent
 ASSETS = ROOT / "assets"
 
 
-@st.cache_data
 def load_config() -> dict:
     with open(ROOT / "content_config.toml", "rb") as f:
         return tomllib.load(f)
 
-@st.cache_data
 def load_publications() -> pd.DataFrame:
     return pd.read_csv(ROOT / "data" / "publications.csv").sort_values("year", ascending=False)
 
-@st.cache_data
 def load_grants() -> pd.DataFrame:
     return pd.read_csv(ROOT / "data" / "grants.csv").sort_values("year", ascending=False)
 
-@st.cache_data
 def load_presentations() -> pd.DataFrame:
     return pd.read_csv(ROOT / "data" / "presentations.csv").sort_values("year", ascending=False)
 
-@st.cache_data
 def load_research_projects() -> pd.DataFrame:
     return pd.read_csv(ROOT / "data" / "research_projects.csv")
 
-@st.cache_data
 def load_photos() -> pd.DataFrame:
     path = ROOT / "data" / "photos.csv"
     if not path.exists():
