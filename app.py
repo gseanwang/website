@@ -81,6 +81,7 @@ _PHOTO_CAPTIONS = {
     "talk_carrot_conference_2026_hochmuth": "42nd International Carrot Conference, Bakersfield, CA · June 2026",
     "talk_carrot_conference_2026_slide":    "Presenting at the 42nd International Carrot Conference",
     "talk_carrot_conference_2026_stage":    "Oral presentation, 42nd International Carrot Conference",
+    "leadership_psc_oregon_fieldtrip_2026": "UF Plant Science Council Oregon field trip — Dorena Genetic Resource Center (May 2026)",
 }
 
 def _render_image_grid(paths: list, cols: int = 3) -> None:
@@ -525,6 +526,10 @@ elif page == "🎓  Teaching & Leadership":
         card("Co-Chair, Events Committee — UF Plant Science Council (2025–2026)",
              "Orchestrated the Plant Science Symposium (400+ attendees) and social events; "
              "oversaw logistics, vendor coordination, and budget allocation.")
+        card("Field Trip Coordinator — UF Plant Science Council (May 2026)",
+             "Planned and led the council's Oregon research field trip end-to-end — built the full "
+             "itinerary and logistics for visits to a forest seedling nursery, USDA-ARS, and the "
+             "USDA Forest Service Dorena Genetic Resource Center.")
         card("Counselor — NEO Education College Summer Camp (2024)",
              "Facilitated educational programming for college-bound students.")
 
