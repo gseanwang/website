@@ -646,6 +646,7 @@ elif page == "📰  In the News":
             ),
             "url": "https://blogs.ifas.ufl.edu/hosdept/2025/03/14/stakeholders-researchers-and-regulators-committed-to-advancing-soil-health-through-long-term-adoption-of-cover-cropping/",
             "tags": ["USDA-NIFA", "Regenerative Agriculture", "Soil Health", "UF/IFAS"],
+            "image": "news_uf_blog_covercrop.jpg",
         },
         {
             "emoji": "🇺🇸",
@@ -665,6 +666,7 @@ elif page == "📰  In the News":
             ),
             "url": "https://www.facebook.com/UFPlantPathology/posts/pfbid0v8sqqKXYAgZrMsbwYEgZ9p2HjFSnTUiGxfj8vKs24L4USTKomA7N8vDHWiGgjDWVl",
             "tags": ["Plant Science Symposium", "Plant Disease Diagnostics", "Leadership", "UF Plant Pathology"],
+            "image": "news_uf_facebook_microscopy.jpg",
         },
         {
             "emoji": "🇹🇼",
@@ -684,6 +686,7 @@ elif page == "📰  In the News":
             ),
             "url": "https://news.ltn.com.tw/news/life/breakingnews/3521624",
             "tags": ["Welsh Onion", "IPM", "Extension", "Taiwan MOA", "National Media"],
+            "image": "news_libertytimes_welshonion.jpg",
         },
     ]
 
@@ -699,9 +702,20 @@ elif page == "📰  In the News":
                 f'<br><span style="font-size:0.9rem;color:#555;font-style:italic">'
                 f'{item["title_en"]}</span>'
             )
-        st.markdown(
-            f'<div style="border:1px solid #e0e0e0;border-radius:10px;padding:1.4rem 1.6rem;'
-            f'margin-bottom:1.4rem;background:#fafafa;">'
+
+        thumb_html = ""
+        if item.get("image"):
+            _ip = ROOT / "assets" / item["image"]
+            if _ip.exists():
+                _mime, _b64 = _img_b64(_ip)
+                thumb_html = (
+                    f'<img src="data:image/{_mime};base64,{_b64}" '
+                    f'style="width:200px;height:150px;object-fit:cover;border-radius:8px;'
+                    f'flex-shrink:0" alt="{item["outlet"]}" />'
+                )
+
+        text_html = (
+            f'<div style="flex:1;min-width:260px">'
             f'<div style="font-size:0.82rem;color:#888;margin-bottom:0.3rem">'
             f'{item["emoji"]} &nbsp;<strong>{item["outlet"]}</strong>'
             f' &nbsp;·&nbsp; {item["date"]}</div>'
@@ -712,6 +726,14 @@ elif page == "📰  In the News":
             f'{tags_html}<br><br>'
             f'<a href="{item["url"]}" target="_blank" style="color:#2e7d32;font-weight:500">'
             f'Read the full article →</a>'
+            f'</div>'
+        )
+
+        st.markdown(
+            f'<div style="border:1px solid #e0e0e0;border-radius:10px;padding:1.4rem 1.6rem;'
+            f'margin-bottom:1.4rem;background:#fafafa;display:flex;gap:1.3rem;'
+            f'align-items:flex-start;flex-wrap:wrap">'
+            f'{thumb_html}{text_html}'
             f'</div>',
             unsafe_allow_html=True,
         )
