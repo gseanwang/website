@@ -233,7 +233,9 @@ if page == "🏠  Professional Summary":
     # Affiliations
     st.markdown("### Professional Affiliations & Memberships")
     for aff in cfg["affiliations"]:
-        st.markdown(f"🌿 **{aff['org']}** — {aff['role']} · *{aff['years']}*")
+        url = str(aff.get("url", "")).strip()
+        org = f"[{aff['org']}]({url})" if url else aff["org"]
+        st.markdown(f"🌿 **{org}** — {aff['role']} · *{aff['years']}*")
 
 
 # =============================================================================
