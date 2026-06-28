@@ -190,9 +190,8 @@ if page == "🏠  Professional Summary":
         m = METRICS
         st.metric("U.S. Carrot Production Informed", m["carrot_pct"],     m["carrot_pct_delta"])
         st.metric("Pesticide Reduction (IPM)",       m["pesticide"],      m["pesticide_delta"])
-        st.metric("Research Experience",             m["experience"],     m["experience_delta"])
-        st.metric("Conference Presentations",        m["presentations"],  m["presentations_delta"])
         st.metric("Publications & Reports",          m["publications"],   m["publications_delta"])
+        st.metric("Conference Presentations",        m["presentations"],  m["presentations_delta"])
         st.metric("International Grant Funding",      m["grants_total"],   m["grants_delta"])
         st.metric("Junior Scientists Mentored",      m["mentees"],        m["mentees_delta"])
 
