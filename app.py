@@ -170,6 +170,30 @@ if page == "🏠  Professional Summary":
     )
     st.markdown("---")
 
+    # What I Bring to an R&D Team — industry-facing capability highlight
+    st.markdown("### 💼 What I Bring to an R&D Team")
+    _wib = [
+        ("🧪", "Design & run trials", "CRD/RCBD lab, greenhouse & field experiments (~3-acre scale)"),
+        ("🔬", "Pathogen diagnostics & collections", "Isolation, inoculation systems & multi-locus ID (84-isolate survey)"),
+        ("🧫", "Evaluate products", "Seed treatments, biologicals & conventional fungicides; EC50 / resistance screening"),
+        ("📊", "Turn data into decisions", "Trial data → spray programs & product positioning (~86% of U.S. carrot production)"),
+        ("🤝", "Stakeholder communication", "Growers, industry partners (Grimmway, CFCAB) & scientists"),
+        ("📝", "Grant & collaboration support", "Co-wrote USDA-NIFA proposals; university–industry work"),
+    ]
+    _wib_cells = "".join(
+        f'<div style="flex:1 1 44%;min-width:240px;margin:7px 0">'
+        f'<span style="color:#2e7d32;font-weight:600">{icon}&nbsp; {head}</span><br>'
+        f'<span style="color:#555;font-size:0.88rem">{desc}</span></div>'
+        for icon, head, desc in _wib
+    )
+    st.markdown(
+        f'<div style="background:#f1f8f1;border:1px solid #d7e9d7;border-radius:10px;'
+        f'padding:1rem 1.3rem 0.6rem;display:flex;flex-wrap:wrap;gap:0.2rem 1.6rem;'
+        f'margin-bottom:0.4rem">{_wib_cells}</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown("---")
+
     col_bio, col_met = st.columns([3, 2], gap="large")
 
     with col_bio:
@@ -202,7 +226,13 @@ if page == "🏠  Professional Summary":
     vid_col, _vid_spacer = st.columns([3, 2], gap="large")
     with vid_col:
         st.video("https://www.youtube.com/watch?v=z9ULZtZQ7u4")
-        st.caption("*Solving Problems in the Field*")
+        st.markdown(
+            "**Solving Problems in the Field** — a short overview of my doctoral research: "
+            "why *Alternaria* leaf blight threatens Florida's fast-growing carrot industry "
+            "(4,000 → 6,000 acres since 2019, still with no Florida-specific IPM guide), and how "
+            "I'm building local cultural- and biological-control strategies to move growers beyond "
+            "chemical-heavy management toward more sustainable, lower-cost disease control."
+        )
 
     st.markdown("---")
 
