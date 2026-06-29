@@ -704,8 +704,8 @@ elif page == "📰  In the News":
             "emoji": "🇹🇼",
             "outlet": "自由時報 (Liberty Times) — Taiwan National Media",
             "date": "May 5, 2021",
-            "title": "花蓮成功「移地保種」三星蔥 16噸青蔥收成回娘家",
-            "title_en": "Hualien successfully completes ex-situ conservation of Sanxing Welsh Onion — 16 tonnes harvested",
+            "title": "Hualien successfully completes ex-situ conservation of Sanxing Welsh Onion — 16 tonnes harvested",
+            "title_en": "花蓮成功「移地保種」三星蔥 16噸青蔥收成回娘家",
             "description": (
                 "This national news report covers the landmark ex-situ germplasm conservation initiative "
                 "at Hualien District Agricultural Research and Extension Station (MOA), where Sean served "
