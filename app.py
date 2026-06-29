@@ -246,7 +246,7 @@ if page == "🏠  Professional Summary":
     st.markdown("---")
 
     # Affiliations
-    st.markdown("### Leadership & Affiliations")
+    st.markdown("### Leadership")
     for aff in cfg["affiliations"]:
         url = str(aff.get("url", "")).strip()
         org = f"[{aff['org']}]({url})" if url else aff["org"]
@@ -257,10 +257,10 @@ if page == "🏠  Professional Summary":
     # What I Bring to an R&D Team — industry-facing capability highlight
     st.markdown("### 💼 What I Bring to an R&D Team")
     _wib = [
-        ("🧪", "Design & run trials", "CRD/RCBD lab, greenhouse & field experiments (~3-acre scale)"),
-        ("🔬", "Pathogen diagnostics & collections", "Isolation, inoculation systems & multi-locus ID (84-isolate survey)"),
+        ("🧪", "Design & run trials", "Lab, greenhouse & field experiments"),
+        ("🔬", "Pathogen diagnostics & collections", "Isolation, inoculation systems & multi-locus ID"),
         ("🧫", "Evaluate products", "Seed treatments, biologicals & conventional fungicides; EC50 / resistance screening"),
-        ("📊", "Turn data into decisions", "Trial data → spray programs & product positioning (~86% of U.S. carrot production)"),
+        ("📊", "Turn data into decisions", "Trial data → spray programs & product positioning"),
         ("🤝", "Stakeholder communication", "Growers, industry partners (Grimmway, CFCAB) & scientists"),
         ("📝", "Grant & collaboration support", "Co-wrote USDA-NIFA proposals; university–industry work"),
     ]
