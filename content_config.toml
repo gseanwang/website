@@ -67,10 +67,12 @@ thesis      = ""
 "Data Visualization & Design"  = ["Adobe Illustrator", "Adobe Photoshop", "Figma", "SigmaPlot"]
 "Scientific Communication"     = ["Peer-Reviewed Manuscripts", "UF/IFAS Extension Publications", "K-12 & Grower Outreach", "Grant Writing & Federal Reporting"]
 
+# Leadership roles first, then memberships
 [[affiliations]]
-org   = "American Phytopathological Society"
-role  = "Member — Diagnosticians, Emerging Disease, Graduate Student, IPM, Seed Pathology Committees"
-years = "2023 – Present"
+org   = "UF Plant Science Council"
+role  = "Co-Chair, Events Committee"
+years = "2025 – 2026"
+url   = "https://www.ufplants.org/past"
 
 [[affiliations]]
 org   = "UF Plant Pathology Graduate Student Organization"
@@ -79,10 +81,9 @@ years = "2025 – 2026"
 url   = "https://plantpath.ifas.ufl.edu/people/graduate-student-organization/"
 
 [[affiliations]]
-org   = "UF Plant Science Council"
-role  = "Co-Chair, Events Committee"
-years = "2025 – 2026"
-url   = "https://www.ufplants.org/past"
+org   = "American Phytopathological Society"
+role  = "Member — Diagnosticians, Emerging Disease, Graduate Student, IPM, Seed Pathology Committees"
+years = "2023 – Present"
 
 [[affiliations]]
 org   = "Florida Phytopathological Society"

@@ -198,7 +198,7 @@ if page == "🏠  Professional Summary":
     st.markdown("---")
 
     # Featured video — field research
-    st.markdown("### 🎥 Research Overview")
+    st.markdown("### 🎥 My Research in 3 Minutes")
     vid_col, _vid_spacer = st.columns([3, 2], gap="large")
     with vid_col:
         st.video("https://www.youtube.com/watch?v=z9ULZtZQ7u4")
@@ -246,7 +246,7 @@ if page == "🏠  Professional Summary":
     st.markdown("---")
 
     # Affiliations
-    st.markdown("### Professional Affiliations & Memberships")
+    st.markdown("### Leadership & Affiliations")
     for aff in cfg["affiliations"]:
         url = str(aff.get("url", "")).strip()
         org = f"[{aff['org']}]({url})" if url else aff["org"]
