@@ -485,7 +485,7 @@ elif page == "📄  Publications & Grants":
         for _, row in awards.iterrows():
             amt = f" · ${int(row['amount_usd']):,}" if row["amount_usd"] > 0 else ""
             card(f"{row['title']}{amt}",
-                 f"{row['agency']} · {int(row['year'])}<br><em>{row['description']}</em>")
+                 f"{row['agency']} · {row['year']}<br><em>{row['description']}</em>")
 
     if not submitted.empty:
         st.markdown("---")
