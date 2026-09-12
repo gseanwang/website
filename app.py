@@ -416,19 +416,39 @@ elif page == "📄  Publications & Grants":
     ])
     st.markdown("---")
 
+    st.markdown(
+        f'<a href="{P["google_scholar"]}" target="_blank" rel="noopener" '
+        f'style="display:inline-block;text-decoration:none;color:#2e7d32;font-weight:600;'
+        f'border:1px solid #2e7d32;border-radius:8px;padding:.45rem 1rem;font-size:.92rem">'
+        f'📚&nbsp; View all publications on Google Scholar →</a>',
+        unsafe_allow_html=True,
+    )
+    st.markdown("")
+
     def _pub_row(row):
         authors = row["authors"]
         year    = int(row["year"])
         title   = row["title"]
         journal = row["journal"]
         doi     = str(row.get("doi","")).strip()
+        url     = str(row.get("url","")).strip()
         note    = str(row.get("contribution_note","")).strip()
         vol     = str(row.get("volume","")).strip()
         pages   = str(row.get("pages","")).strip()
+
+        # Make the title itself open the paper: an explicit url wins, else the DOI.
+        target = url if url and url != "nan" else (
+            f"https://doi.org/{doi}" if doi and doi != "nan" else "")
+        title_str = (
+            f'<a href="{target}" target="_blank" rel="noopener" '
+            f'style="color:inherit;text-decoration:underline;text-underline-offset:2px;'
+            f'text-decoration-color:#9ccc9c">{title}</a>'
+        ) if target else title
+
         doi_link = f" [DOI](https://doi.org/{doi})" if doi and doi != "nan" else ""
         vol_str  = f", {vol}" if vol and vol != "nan" else ""
         pgs_str  = f", {pages}" if pages and pages != "nan" else ""
-        pub_item(f"**{authors}** ({year}). {title}. *{journal}*{vol_str}{pgs_str}.{doi_link}",
+        pub_item(f"**{authors}** ({year}). {title_str}. *{journal}*{vol_str}{pgs_str}.{doi_link}",
                  note if note != "nan" else "")
 
     st.markdown("### 📰 Peer-Reviewed Publications")
