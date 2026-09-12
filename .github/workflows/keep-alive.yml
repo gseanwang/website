@@ -61,3 +61,32 @@ jobs:
               print("Visited", url, "| page title:", page.title())
               browser.close()
           PY
+
+  # GitHub auto-disables scheduled workflows after 60 days with no repository
+  # activity — which is exactly how this keep-alive died before. Commit a small
+  # heartbeat whenever the repo has been quiet, so the 60-day clock never runs out.
+  heartbeat:
+    needs: ping
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Commit a heartbeat if the repo has been quiet for 20+ days
+        run: |
+          DAYS=$(( ( $(date +%s) - $(git log -1 --format=%ct) ) / 86400 ))
+          echo "Days since last commit: $DAYS"
+          if [ "$DAYS" -lt 20 ]; then
+            echo "Repo active recently — no heartbeat needed."
+            exit 0
+          fi
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/keepalive-heartbeat.txt
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/keepalive-heartbeat.txt
+          git commit -m "chore: keep-alive heartbeat (keeps the schedule from being auto-disabled)"
+          git push
+          echo "Heartbeat committed — 60-day inactivity clock reset."
