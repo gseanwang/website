@@ -435,8 +435,20 @@ elif page == "📄  Publications & Grants":
         doi     = str(row.get("doi","")).strip()
         url     = str(row.get("url","")).strip()
         note    = str(row.get("contribution_note","")).strip()
-        vol     = str(row.get("volume","")).strip()
-        pages   = str(row.get("pages","")).strip()
+
+        # A CSV column with blanks loads as float, so volume 21 arrives as "21.0".
+        def _clean_num(value):
+            text = str(value).strip()
+            if not text or text == "nan":
+                return ""
+            try:
+                number = float(text)
+            except ValueError:
+                return text          # ranges like "79-88" pass through untouched
+            return str(int(number)) if number == int(number) else text
+
+        vol     = _clean_num(row.get("volume",""))
+        pages   = _clean_num(row.get("pages",""))
 
         # Make the title itself open the paper: an explicit url wins, else the DOI.
         target = url if url and url != "nan" else (
