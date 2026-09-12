@@ -425,7 +425,9 @@ elif page == "📄  Publications & Grants":
     )
     st.markdown("")
 
-    def _pub_row(row):
+    # Rendered as pure HTML: mixing raw tags with markdown makes Streamlit skip
+    # the markdown, so bold/italics/links would show their literal syntax.
+    def _pub_row(row, status_label=""):
         authors = row["authors"]
         year    = int(row["year"])
         title   = row["title"]
@@ -445,10 +447,15 @@ elif page == "📄  Publications & Grants":
             f'text-decoration-color:#9ccc9c">{title}</a>'
         ) if target else title
 
-        doi_link = f" [DOI](https://doi.org/{doi})" if doi and doi != "nan" else ""
-        vol_str  = f", {vol}" if vol and vol != "nan" else ""
-        pgs_str  = f", {pages}" if pages and pages != "nan" else ""
-        pub_item(f"**{authors}** ({year}). {title_str}. *{journal}*{vol_str}{pgs_str}.{doi_link}",
+        doi_link = (
+            f' <a href="https://doi.org/{doi}" target="_blank" rel="noopener" '
+            f'style="color:#2e7d32;font-weight:600;text-decoration:none">DOI</a>'
+        ) if doi and doi != "nan" else ""
+        vol_str   = f", {vol}" if vol and vol != "nan" else ""
+        pgs_str   = f", {pages}" if pages and pages != "nan" else ""
+        label_str = f' <em style="color:#666">({status_label})</em>' if status_label else ""
+        pub_item(f"<strong>{authors}</strong> ({year}). {title_str}. "
+                 f"<em>{journal}</em>{vol_str}{pgs_str}.{label_str}{doi_link}",
                  note if note != "nan" else "")
 
     st.markdown("### 📰 Peer-Reviewed Publications")
@@ -459,9 +466,7 @@ elif page == "📄  Publications & Grants":
     st.markdown("### 📝 Manuscripts Under Review & In Preparation")
     for _, row in pubs[pubs["status"].isin(["under_review","in_preparation"])].iterrows():
         label = "Under Review" if row["status"] == "under_review" else "In Progress"
-        r = row.copy()
-        r["journal"] = f"{row['journal']} (*{label}*)"
-        _pub_row(r)
+        _pub_row(row, status_label=label)
 
     st.markdown("---")
     st.markdown("### 📋 Extension & Technical Reports")
