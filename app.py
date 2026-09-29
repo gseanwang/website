@@ -499,12 +499,14 @@ elif page == "📄  Publications & Grants":
 
     st.markdown("**Oral Presentations**")
     for _, row in oral.iterrows():
-        award = f" 🏆 *{row['award']}*" if str(row.get("award","")) not in ("","nan") else ""
-        pub_item(f"**{row['authors']}** ({int(row['year'])}). *{row['title']}*. {row['event']}, {row['location']}.{award}")
+        award = f" 🏆 <em>{row['award']}</em>" if str(row.get("award","")) not in ("","nan") else ""
+        pub_item(f"<strong>{row['authors']}</strong> ({int(row['year'])}). <em>{row['title']}</em>. "
+                 f"{row['event']}, {row['location']}.{award}")
 
     st.markdown("**Poster Presentations**")
     for _, row in poster.iterrows():
-        pub_item(f"**{row['authors']}** ({int(row['year'])}). *{row['title']}*. {row['event']}, {row['location']}.")
+        pub_item(f"<strong>{row['authors']}</strong> ({int(row['year'])}). <em>{row['title']}</em>. "
+                 f"{row['event']}, {row['location']}.")
 
     st.markdown("---")
     st.markdown("### 💰 Grants, Awards & Fellowships")
@@ -520,8 +522,8 @@ elif page == "📄  Publications & Grants":
         for _, row in competitive.iterrows():
             amt = f"${int(row['amount_usd']):,}"
             card(f"{row['title']}  ·  {amt}",
-                 f"**Agency:** {row['agency']}  ·  **Year:** {int(row['year'])}<br>"
-                 f"**Role:** {row['role']}<br><em>{row['description']}</em>")
+                 f"<strong>Agency:</strong> {row['agency']}  ·  <strong>Year:</strong> {int(row['year'])}<br>"
+                 f"<strong>Role:</strong> {row['role']}<br><em>{row['description']}</em>")
         total = competitive["amount_usd"].sum()
         st.metric("Total Competitive Grant Funding", f"~${total:,.0f}")
 
@@ -550,8 +552,8 @@ elif page == "📄  Publications & Grants":
         st.caption("Submitted proposals — pending review; not yet funded.")
         for _, row in submitted.iterrows():
             card(row["title"],
-                 f"**Agency:** {row['agency']}  ·  **Submitted:** {int(row['year'])}<br>"
-                 f"**Role:** {row['role']}<br><em>{row['description']}</em>")
+                 f"<strong>Agency:</strong> {row['agency']}  ·  <strong>Submitted:</strong> {int(row['year'])}<br>"
+                 f"<strong>Role:</strong> {row['role']}<br><em>{row['description']}</em>")
 
 
 # =============================================================================
@@ -640,10 +642,10 @@ elif page == "🎓  Teaching & Leadership":
     pr1, pr2, pr3 = st.columns(3)
     with pr1:
         card("Journal Reviewer",
-             "*Physiological and Molecular Plant Pathology* — reviewed original research and review articles (2025)")
+             "<em>Physiological and Molecular Plant Pathology</em> — reviewed original research and review articles (2025)")
     with pr2:
         card("Book Chapter Reviewer",
-             "American Phytopathological Society — reviewed Chapter III for the *Compendium of Pepper Diseases* (2025)")
+             "American Phytopathological Society — reviewed Chapter III for the <em>Compendium of Pepper Diseases</em> (2025)")
     with pr3:
         card("Regional Scientific Reviewer",
              "Junior Science & Humanities Symposium (U.S. Dept. of Defense, 2025) — "
