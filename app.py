@@ -309,6 +309,10 @@ elif page == "🔬  Research & Experience":
                 for h in highlights:
                     st.markdown(f"- {h}")
             with p2:
+                award_usd = int(float(row.get('award_usd', 0) or 0))
+                if award_usd > 0:
+                    st.metric("Total Award", f"${award_usd:,}",
+                              f"{int(row['start_year'])}–{int(row['end_year'])}")
                 acres_managed  = int(row['acres_managed'])
                 acres_informed = int(row['acres_informed'])
                 pid = str(row['project_id'])
@@ -328,9 +332,12 @@ elif page == "🔬  Research & Experience":
     # ── Professional Experience ───────────────────────────────────────────────
     st.markdown("### Professional Experience")
 
-    with st.expander("🇺🇸  Postdoctoral Research Associate (Incoming) — University of Florida / IFAS, North Florida REC, Quincy, FL · Aug 2026", expanded=True):
+    with st.expander("🇺🇸  Postdoctoral Research Associate — University of Florida / IFAS, North Florida REC, Quincy, FL (2026–present)", expanded=True):
         st.markdown("""
-- Incoming postdoctoral researcher at the UF/IFAS **North Florida Research and Education Center (NFREC)**, Quincy, FL — beginning **August 2026**
+**USDA-NIFA OREI project — *Alternaria* leaf blight in certified-organic carrots** (PI: Dr. Sanju Kunwar)
+- Postdoctoral researcher and key personnel on a three-year USDA-NIFA Organic Agriculture Research and Extension Initiative award (2026–2029)
+- Wrote the project narrative and generated the preliminary data behind the award
+- Designated lead for day-to-day field trials and NOP-compliant seed phytosanitation
 """)
 
     with st.expander("🇺🇸  Graduate Research Assistant — University of Florida (2022–2026)", expanded=True):
@@ -343,7 +350,7 @@ Led applied plant pathology research on carrot diseases — especially *Alternar
 
 **Cropping Systems Pathology (USDA-NIFA Organic Transitions)**
 - Ran a multi-year (2023–2026) field study across conventional, organic, and regenerative carrot–peanut–corn rotations, assessing *Alternaria* leaf blight, corn ear rot, and soilborne disease pressure
-- Generated the preliminary data and wrote the project narrative for the submitted USDA-NIFA OREI proposal built on this study (2026)
+- Generated the preliminary data and wrote the project narrative for the USDA-NIFA OREI proposal built on this study — funded in 2026
 
 **Seed Pathology & Diagnostics**
 - Surveyed 84 isolates over a four-year sampling of commercial carrot seed lots and established *A. alternata* as the dominant Florida ALB pathogen via multi-locus phylogenetics (ITS, GAPDH, *Alt a 1*)
@@ -505,7 +512,8 @@ elif page == "📄  Publications & Grants":
     g1, g2 = st.columns(2)
     competitive = grants[grants["type"].isin(["international_grant"])]
     submitted   = grants[grants["type"] == "submitted"]
-    awards      = grants[~grants["type"].isin(["international_grant", "submitted"])]
+    funded      = grants[grants["type"] == "funded_proposal"]
+    awards      = grants[~grants["type"].isin(["international_grant", "submitted", "funded_proposal"])]
 
     with g1:
         st.markdown("#### Competitive Grants")
@@ -523,6 +531,18 @@ elif page == "📄  Publications & Grants":
             amt = f" · ${int(row['amount_usd']):,}" if row["amount_usd"] > 0 else ""
             card(f"{row['title']}{amt}",
                  f"{row['agency']} · {row['year']}<br><em>{row['description']}</em>")
+
+    # Awards to the university on proposals I helped write. Shown at the full award
+    # amount, so they stay out of the personal grant total above.
+    if not funded.empty:
+        st.markdown("---")
+        st.markdown("#### Funded Proposals")
+        st.caption("Proposals I helped write that were funded — full award to the University of Florida; "
+                   "not included in the grant total above.")
+        for _, row in funded.iterrows():
+            card(f"{row['title']}  ·  ${int(row['amount_usd']):,}",
+                 f"<strong>Agency:</strong> {row['agency']}<br>"
+                 f"<strong>Role:</strong> {row['role']}<br><em>{row['description']}</em>")
 
     if not submitted.empty:
         st.markdown("---")
@@ -872,5 +892,5 @@ elif page == "📬  Contact & CV":
         with s2:
             card("Timeline",
                  f"🎓 Ph.D. completed: {COLLAB['expected_graduation']}<br>"
-                 "🔬 Incoming Postdoc — UF/IFAS NFREC, Quincy (Aug 2026)<br>"
+                 "🔬 Postdoc — UF/IFAS NFREC, Quincy (2026–present)<br>"
                  "📅 Available for discussions now")
