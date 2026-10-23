@@ -332,10 +332,10 @@ elif page == "🔬  Research & Experience":
     # ── Professional Experience ───────────────────────────────────────────────
     st.markdown("### Professional Experience")
 
-    with st.expander("🇺🇸  Postdoctoral Research Associate — University of Florida / IFAS, North Florida REC, Quincy, FL (2026–present)", expanded=True):
+    with st.expander("🇺🇸  Post-Doctoral Associate — University of Florida / IFAS, North Florida REC, Quincy, FL (2026–present)", expanded=True):
         st.markdown("""
 **USDA-NIFA OREI project — *Alternaria* leaf blight in certified-organic carrots** (PI: Dr. Sanju Kunwar)
-- Postdoctoral researcher and key personnel on a three-year USDA-NIFA Organic Agriculture Research and Extension Initiative award (2026–2029)
+- Post-Doctoral Associate and key personnel on a three-year USDA-NIFA Organic Agriculture Research and Extension Initiative award (2026–2029)
 - Wrote the project narrative and generated the preliminary data behind the award
 - Designated lead for day-to-day field trials and NOP-compliant seed phytosanitation
 """)
