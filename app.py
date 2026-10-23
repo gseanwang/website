@@ -83,6 +83,10 @@ _PHOTO_CAPTIONS = {
     "talk_carrot_conference_2026_stage":    "Oral presentation, 42nd International Carrot Conference",
     "leadership_psc_oregon_trip_2026": "UF Plant Science Council Oregon field trip — Dorena Genetic Resource Center (May 2026)",
     "field_california_sample_collection": "Collecting carrot samples in a California field",
+    "leadership_ask_the_postdocs_2026_panel": "Ask the Postdocs — seven-postdoc panel for UF Plant Pathology graduate students (Oct 2026)",
+    "leadership_ask_the_postdocs_2026_qa":    "Ask the Postdocs — qualifying-exam prep and Ph.D. Q&A (Oct 2026)",
+    "talk_misa_2026_invited": "Invited talk, Eleventh Annual MISA Symposium, UCF, Orlando, FL (Oct 2026)",
+    "talk_misa_2026_slide":   "Alternaria leaf blight of carrot in Florida — invited talk at the MISA Symposium",
 }
 
 def _render_image_grid(paths: list, cols: int = 3) -> None:
@@ -619,6 +623,9 @@ elif page == "🎓  Teaching & Leadership":
     st.markdown("### 🏛️ Leadership Experience")
     l1, l2 = st.columns(2)
     with l1:
+        card("Organizer & Panelist — Ask the Postdocs, UF Plant Pathology (Oct 2026)",
+             "Organized a qualifying-exam prep and Ph.D. Q&A session for plant pathology graduate "
+             "students, with a panel of seven postdocs (in person and on Zoom).")
         card("Vice President (Event Coordinator) — UF Plant Pathology Graduate Student Organization (2025–2026)",
              "Led operations for 50+ member organization; managed schedules, events, meeting agendas, "
              "and internal communications. Served as primary bridge between student body and faculty administration.")
@@ -676,7 +683,8 @@ elif page == "🎓  Teaching & Leadership":
 - 2025 — Florida Junior Academy's JSHS 2025: UF laboratory tours for high school students (n=30)
 - 2024 — UF/IFAS Spring Festival: Plant fungal pathogen culture display for local community
 
-**Event Organizer (5):**
+**Event Organizer (6):**
+- 2026 — Ask the Postdocs: Qualifying Exam Prep & Ph.D. Q&A (UF Plant Pathology)
 - 2026 — 10th Annual Plant Science Symposium
 - 2025 — 2025 Joint Meeting of the Caribbean and Southern Division APS
 - 2021 — Welsh Onion Conservation Healthy Seedlings Workshop
